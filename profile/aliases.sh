@@ -1,5 +1,7 @@
 #!/bin/bash
 
+script_dir="$(cd "$(dirname ${BASH_SOURCE[0]-$0})" && pwd)"
+
 # system
 alias ls="ls -1"
 alias ll="ls -l"
@@ -11,7 +13,7 @@ alias n='osascript -e "display notification \"Command finished executing 👍\" 
 # Git
 alias gamd="git commit -a --amend"
 alias gcha="git commit --amend"
-alias gdel="$PROFILE_FOLDER/scripts/gdel.sh"
+alias gdel="$script_dir/scripts/gdel.sh"
 alias gdif="git diff"
 alias glas="git checkout -"
 alias glog="git log --pretty=oneline --abbrev-commit -10"
@@ -19,7 +21,7 @@ alias gmas="git checkout master"
 alias gmit="git commit -am"
 alias gnew="git checkout -b"
 alias gpul="git pull"
-alias gpus="$PROFILE_FOLDER/scripts/gpus.sh"
+alias gpus="$script_dir/scripts/gpus.sh"
 alias greb="git checkout master && git pull && git checkout - && git rebase -i master"
 alias grebc="git add . && git rebase --continue"
 alias gren="git branch -m"

@@ -1,3 +1,5 @@
+script_dir="$(cd "$(dirname ${BASH_SOURCE[0]-$0})" && pwd)"
+
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
@@ -61,7 +63,7 @@ ZSH_THEME="jimcasey"
 # HIST_STAMPS="mm/dd/yyyy"
 
 # Would you like to use another custom folder than $ZSH/custom?
-ZSH_CUSTOM=$PROFILE_FOLDER
+ZSH_CUSTOM=$script_dir
 
 # Which plugins would you like to load?
 # Standard plugins can be found in ~/.oh-my-zsh/plugins/*
@@ -98,4 +100,4 @@ source $ZSH/oh-my-zsh.sh
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
-source $PROFILE_FOLDER/aliases.sh
+source $script_dir/aliases.sh
