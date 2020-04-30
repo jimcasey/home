@@ -24,3 +24,8 @@ ZSH_THEME_GIT_PROMPT_UNTRACKED="%{$FG[190]%}✭"
 PROMPT='
 ${time} ${working_directory} $(git_prompt_info)$(git_prompt_status)%{$reset_color%}
 $ '
+
+# runtime reporting
+REPORTTIME=10
+TIMEFMT="${fg[cyan]}Elapsed time: %E${reset_color}"
+
