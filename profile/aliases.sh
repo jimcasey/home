@@ -8,7 +8,7 @@ alias ll="ls -l"
 alias reprofile="source ~/.zshrc"
 alias copypk="cat ~/.ssh/id_rsa.pub | pbcopy"
 alias pbjson="pbpaste | python -m json.tool | bat -l json"
-alias n='osascript -e "display notification \"Command finished executing 👍\" with title \"Terminal\" sound name \"Submarine\""'
+alias boop='osascript -e "display notification \"Command finished executing 👍\" with title \"Terminal\" sound name \"Submarine\""'
 
 # Git
 alias gamd="git commit -a --amend"
