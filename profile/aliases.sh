@@ -25,6 +25,7 @@ alias gpus="$script_dir/scripts/gpus.sh"
 alias greb="git checkout master && git pull && git checkout - && git rebase -i master"
 alias grebc="git add . && git rebase --continue"
 alias gren="git branch -m"
+alias gres="git checkout master && git fetch origin && git reset --hard origin/master"
 alias gsta="git status"
 
 alias gmasp="gmas && gpul"
