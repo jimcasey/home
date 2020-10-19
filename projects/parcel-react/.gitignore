@@ -1,3 +1,4 @@
 .cache/
+.npmrc
 dist/
 node_modules/
