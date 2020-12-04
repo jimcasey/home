@@ -19,9 +19,6 @@ if ! grep -qs "$zshrc_command" $zshrc_local; then
   echo $zshrc_command >> $zshrc_local
 fi
 
-echo_action "Installing Oh My Zsh..."
-sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
-
 zshrc_backup=~/.zshrc.pre-oh-my-zsh
 if [[ -f $zshrc_backup ]]; then
   echo_action "Restoring ${zshrc_local}..."
