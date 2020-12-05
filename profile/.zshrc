@@ -101,3 +101,5 @@ source $ZSH/oh-my-zsh.sh
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
 source $script_dir/aliases.sh
+
+export MICRO_CONFIG_HOME=$script_dir/micro
