@@ -43,8 +43,6 @@ const buildRegex = (rules, rule, breaker = 0) => {
       default:
         return buildRegex(rules, rules[rule], breaker)
     }
-
-    return buildRegex(rules, rules[rule], breaker)
   }
   return rule
 }
