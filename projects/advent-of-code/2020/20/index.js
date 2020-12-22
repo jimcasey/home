@@ -7,7 +7,13 @@ const INPUT_PATH = `${__dirname}/${TESTING ? 'test' : 'input'}.txt`
 const split = (str, separator = '\n') => str.split(separator).filter((s) => !!s)
 const log = (obj) => console.log(util.inspect(obj, false, null, true))
 
-const EMPTY_ARRAY = new Array(4).fill(undefined)
+const DIRECTIONS = ['n', 'e', 's', 'w']
+
+const SEA_MONSTER = [
+  '..................#.',
+  '#....##....##....###',
+  '.#..#..#..#..#..#...',
+]
 
 const readInput = async () => {
   const file = await fs.readFileSync(INPUT_PATH, 'utf8')
@@ -15,147 +21,83 @@ const readInput = async () => {
 }
 
 const parseTile = (input) => {
-  const [_, id, data] = input.match(/^Tile ([0-9]+):\n([\.#\n]*$)/)
-  const tile = split(data).map((row) => row.split(''))
-
-  const map = []
-  for (let rowIndex = 1; rowIndex < 9; rowIndex++) {
-    const row = []
-    for (let colIndex = 1; colIndex < 9; colIndex++) {
-      row.push(tile[rowIndex][colIndex])
-    }
-    map.push(row)
-  }
-
-  return {
-    id: Number(id),
-    matrix: split(data).map((row) => row.split('')),
-    neighbors: [...EMPTY_ARRAY],
-  }
+  const [_, data] = input.match(/^Tile [0-9]+:\n([\.#\n]*$)/)
+  return split(data).map((row) => row.split(''))
 }
 
-const getEdge = (tile, position) => {
-  switch (position) {
-    case 0:
-      return tile.matrix[0].join('')
-    case 1:
-      return tile.matrix.map((row) => row[9]).join('')
-    case 2:
-      return tile.matrix[9].join('')
-    case 3:
-      return tile.matrix.map((row) => row[0]).join('')
-  }
-}
+const removeTile = (tiles, tile) => tiles.filter((t) => tile !== t)
 
-const reverse = (str) => str.split('').reverse().join('')
+const findNeighbor = (tiles, tile, direction) => {
+  const edge = getEdge(tile, direction)
+  const edgeReverse = edge.split('').reverse().join('')
 
-const findNewNeighbors = (tiles, tile) =>
-  tile.neighbors.reduce((newNeighbors, neighbor, position) => {
-    if (!neighbor) {
-      const edge = getEdge(tile, position)
-      const edgeReverse = reverse(edge)
-
-      for (let indexP = 0; indexP < tiles.length; indexP++) {
-        const tileP = tiles[indexP]
-        if (tile.id === tileP.id) continue
-
-        for (
-          let positionP = 0;
-          positionP < tileP.neighbors.length;
-          positionP++
-        ) {
-          const neighborP = tileP.neighbors[positionP]
-          if (neighborP) continue
-
-          const edgeP = getEdge(tileP, positionP)
-          if (edge === edgeP || edgeReverse === edgeP) {
-            newNeighbors.push({
-              position,
-              neighborID: tileP.id,
-              neighborPosition: positionP,
-            })
-            break
-          }
-        }
+  let neighborEdge
+  let neighborDirection
+  const neighbor = tiles.find((n) => {
+    return DIRECTIONS.reduce((isMatch, d) => {
+      const e = getEdge(n, d)
+      if (e === edge || e === edgeReverse) {
+        neighborEdge = e
+        neighborDirection = d
+        return true
       }
+      return isMatch
+    }, false)
+  })
+
+  let matrix
+  if (neighbor) {
+    matrix = neighbor
+
+    const properDirection = getNeighborDirection(direction)
+    const turns = getTurns(neighborDirection, properDirection)
+    if (turns !== 0) {
+      matrix = rotateMatrix(matrix, turns)
     }
 
-    return newNeighbors
-  }, [])
-
-const getRightTiles = (tileMap, tile) => {
-  let currentTile = tile
-  const arr = []
-  while (currentTile) {
-    arr.push(currentTile)
-    currentTile = getRightTile(tileMap, currentTile)
+    if (getEdge(matrix, properDirection) === edgeReverse) {
+      matrix = flipMatrix(matrix, properDirection)
+    }
   }
-  return arr
+
+  return { neighbor, matrix }
 }
 
-const getRightTile = (tileMap, tile) => {
-  const rightID = tile.neighbors[1]
-  if (!rightID) return
+const getNeighborDirection = (direction) =>
+  DIRECTIONS[(DIRECTIONS.indexOf(direction) + 2) % 4]
 
-  let rightTile = tileMap[rightID]
-
-  const leftPosition = rightTile.neighbors.indexOf(tile.id)
-  if (leftPosition !== 3) {
-    const turns = 3 - leftPosition
-    rightTile = {
-      id: rightTile.id,
-      matrix: rotateMatrix(rightTile.matrix, turns),
-      neighbors: rotateArray(rightTile.neighbors, turns),
-    }
+const logMatrix = (matrix) => {
+  if (!matrix) {
+    console.log('matrix is undefined')
+    return
   }
 
-  if (getEdge(tile, 1) !== getEdge(rightTile, 3)) {
-    rightTile = {
-      id: rightTile.id,
-      matrix: [...rightTile.matrix].reverse(),
-      neighbors: [2, 1, 0, 3].map((index) => rightTile.neighbors[index]),
-    }
-  }
-
-  return rightTile
+  const border = ` ${'-'.repeat(matrix[0].length + 2)} `
+  console.log(border)
+  matrix.forEach((row) => console.log(`| ${row.join('')} |`))
+  console.log(border)
 }
 
-const getStartTiles = (tileMap, tile) => {
-  let currentTile = tile
-  const arr = []
-  while (currentTile) {
-    arr.push(currentTile)
-    currentTile = getBottomTile(tileMap, currentTile)
+const getEdge = (tile, direction) => {
+  if (direction.match(/[ns]/)) {
+    return tile[direction === 's' ? 9 : 0].join('')
   }
-  return arr
+  if (direction.match(/[ew]/)) {
+    return tile.map((row) => row[direction === 'e' ? 9 : 0]).join('')
+  }
 }
 
-const getBottomTile = (tileMap, tile) => {
-  const bottomID = tile.neighbors[2]
-  if (!bottomID) return
-
-  let bottomTile = tileMap[bottomID]
-
-  const topPosition = bottomTile.neighbors.indexOf(tile.id)
-  if (topPosition !== 0) {
-    const turns = 0 - topPosition
-    bottomTile = {
-      id: bottomTile.id,
-      matrix: rotateMatrix(bottomTile.matrix, turns),
-      neighbors: rotateArray(bottomTile.neighbors, turns),
-    }
+const flipMatrix = (matrix, direction) => {
+  if (direction.match(/[ns]/)) {
+    return matrix.map((row) => [...row].reverse())
   }
-
-  if (getEdge(tile, 2) !== getEdge(bottomTile, 0)) {
-    bottomTile = {
-      id: bottomTile.id,
-      matrix: matrix.map((row) => [...row].reverse()),
-      neighbors: [0, 3, 2, 1].map((index) => bottomTile.neighbors[index]),
-    }
+  if (direction.match(/[ew]/)) {
+    return [...matrix].reverse()
   }
-
-  return bottomTile
 }
+
+const getTurns = (direction, properDirection) =>
+  DIRECTIONS.indexOf(properDirection) - DIRECTIONS.indexOf(direction)
 
 const rotateMatrix = (matrix, turns) => {
   let newMatrix = matrix
@@ -168,113 +110,129 @@ const rotateMatrix = (matrix, turns) => {
   return newMatrix
 }
 
-const rotateArray = (array, turns) => {
-  return array.reduce(
-    (newArray, item, index) => {
-      newArray[(index + turns + 4) % 4] = item
-      return newArray
-    },
-    [...EMPTY_ARRAY],
-  )
-}
-
-const SEA_MONSTER = [
-  '..................#.',
-  '#....##....##....###',
-  '.#..#..#..#..#..#...',
-]
-
-const matchesSeaMonster = (matrix, start) =>
-  [0, 1, 2].reduce(
-    (matches, index) =>
-      matches &&
-      new RegExp(SEA_MONSTER[index]).test(matrix[start + index].join('')),
-    true,
-  )
-
-const countSeaMonsters = (matrix) => {
-  let count = 0
-  for (let index = 0; index < matrix.length - 2; index++) {
-    if (matchesSeaMonster(matrix, index)) count++
-  }
-  return count
-}
-
-const run = async () => {
-  const input = await readInput()
-  const tiles = input.map(parseTile)
-  const tileMap = tiles.reduce((obj, tile) => ({ ...obj, [tile.id]: tile }), {})
-
-  tiles.forEach((tile) => {
-    findNewNeighbors(tiles, tile).forEach(
-      ({ position, neighborID, neighborPosition }) => {
-        tile.neighbors[position] = neighborID
-        tileMap[neighborID].neighbors[neighborPosition] = tile.id
-      },
-    )
-  })
-
-  const topLeftTile = tiles.find(
-    ({ neighbors }) => !neighbors[0] && !neighbors[3],
-  )
-  const tileMatrix = getStartTiles(tileMap, topLeftTile).map((startTile) =>
-    getRightTiles(tileMap, startTile),
-  )
-
-  let matrix = tileMatrix.reduce((m, row) => {
+const createMatrix = (tileMatrix) =>
+  tileMatrix.reduce((matrix, row) => {
     row.forEach((tile, rowIndex) => {
-      tile.matrix.slice(1, 9).forEach((cells, cellsIndex) => {
-        const items = cells.slice(1, 9)
-        if (rowIndex === 0) m.push([...items])
-        else m[m.length - 8 + cellsIndex].push(...items)
+      const start = 1
+      const length = 8
+      const end = start + length
+      tile.slice(start, end).forEach((cells, cellsIndex) => {
+        const items = cells.slice(start, end)
+        if (rowIndex === 0) matrix.push([...items])
+        else matrix[matrix.length - length + cellsIndex].push(...items)
       })
     })
-    return m
+    return matrix
   }, [])
 
-  matrix.forEach((row) => console.log(row.join('')))
+const findSeaMonsters = (tileMatrix) => {
+  let matrix = createMatrix(tileMatrix)
 
-  let count = 0
-  for (let index = 0; index < 12; index++) {
-    count = countSeaMonsters(matrix)
-    if (count) break
-    matrix = rotateMatrix(matrix, 1)
+  const flipDirections = ['n', 'e']
+  for (let flipIndex = 0; flipIndex < 3; flipIndex++) {
+    for (let rotateIndex = 0; rotateIndex < 4; rotateIndex++) {
+      const count = countSeaMonsters(matrix)
+      if (count) return { count, finalMatrix: matrix }
+      matrix = rotateMatrix(matrix, 1)
+    }
 
-    if (index === 4 || index === 7) {
-      matrix = matrix.map((row) => [...row].reverse())
+    if (flipIndex < 2) {
+      matrix = flipMatrix(matrix, flipDirections[flipIndex])
     }
   }
 
-  console.log(count)
+  return { count: 0, finalMatrix: matrix }
 }
 
-const TEST_MATRIX = [
-  '.####...#####..#...###..',
-  '#####..#..#.#.####..#.#.',
-  '.#.#...#.###...#.##.##..',
-  '#.#.##.###.#.##.##.#####',
-  '..##.###.####..#.####.##',
-  '...#.#..##.##...#..#..##',
-  '#.##.#..#.#..#..##.#.#..',
-  '.###.##.....#...###.#...',
-  '#.####.#.#....##.#..#.#.',
-  '##...#..#....#..#...####',
-  '..#.##...###..#.#####..#',
-  '....#.##.#.#####....#...',
-  '..##.##.###.....#.##..#.',
-  '#...#...###..####....##.',
-  '.#.##...#.##.#.#.###...#',
-  '#.###.#..####...##..#...',
-  '#.###...#.##...#.######.',
-  '.###.###.#######..#####.',
-  '..##.#..#..#.#######.###',
-  '#.#..##.########..#..##.',
-  '#.#####..#.#...##..#....',
-  '#....##..#.#########..##',
-  '#...#.....#..##...###.##',
-  '#..###....##.#...##.##.#',
-].map((row) => row.split(''))
+const countSeaMonsters = (matrix) => {
+  const str = matrix.map((row) => row.join('')).join('')
 
-console.log(countSeaMonsters(TEST_MATRIX))
+  const re = new RegExp(
+    SEA_MONSTER.join(`.{${matrix.length - SEA_MONSTER[0].length}}`),
+  )
+
+  let match
+  let count = 0
+  let testStr = str
+
+  while ((match = testStr.match(re)) !== null) {
+    console.log(`Found match at ${match.index}.`)
+    count++
+    testStr = testStr.substring(match.index + 1)
+  }
+
+  return count
+}
+
+const countHashes = (matrix) =>
+  matrix.reduce((count, row) => {
+    const arr = Array.isArray(row) ? row : row.split('')
+    return count + arr.filter((str) => str === '#').length
+  }, 0)
+
+const run = async () => {
+  const input = await readInput()
+  let tiles = input.map(parseTile)
+
+  let tile
+  const tileMatrix = []
+  const seed = tiles[0]
+  tileMatrix.push([seed])
+  tiles = removeTile(tiles, seed)
+
+  // find north until none are found
+  tile = seed
+  while (tile) {
+    const { neighbor, matrix } = findNeighbor(tiles, tile, 'n')
+    tile = matrix
+    if (matrix) tileMatrix.unshift([matrix])
+    if (neighbor) tiles = removeTile(tiles, neighbor)
+  }
+
+  // find south until none are found
+  tile = seed
+  while (tile) {
+    const { neighbor, matrix } = findNeighbor(tiles, tile, 's')
+    tile = matrix
+    if (matrix) tileMatrix.push([matrix])
+    if (neighbor) tiles = removeTile(tiles, neighbor)
+  }
+
+  // find west for each row until none is found
+  tileMatrix.forEach((row) => {
+    tile = row[0]
+    while (tile) {
+      const { neighbor, matrix } = findNeighbor(tiles, tile, 'w')
+      tile = matrix
+      if (matrix) row.unshift(matrix)
+      if (neighbor) tiles = removeTile(tiles, neighbor)
+    }
+  })
+
+  // find east for each row until none is found
+  tileMatrix.forEach((row) => {
+    tile = row[row.length - 1]
+    while (tile) {
+      const { neighbor, matrix } = findNeighbor(tiles, tile, 'e')
+      tile = matrix
+      if (matrix) row.push(matrix)
+      if (neighbor) tiles = removeTile(tiles, neighbor)
+    }
+  })
+
+  // find sea monsters
+  const { count, finalMatrix } = findSeaMonsters(tileMatrix)
+
+  if (!count) {
+    console.log('Could not find any sea monsters.')
+  } else {
+    logMatrix(finalMatrix)
+
+    hashCount = countHashes(finalMatrix) - countHashes(SEA_MONSTER) * count
+    console.log(
+      `Found ${count} sea monsters, leaving a total of ${hashCount} uncovered hashes.`,
+    )
+  }
+}
 
 run()
