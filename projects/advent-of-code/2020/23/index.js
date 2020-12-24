@@ -1,53 +1,59 @@
-const TESTING = !!process.env.TEST // 67384529
+const TESTING = !!process.env.TEST // 934001 * 159792 = 149245887792
+
+const MIN_CUP = 1
+const MAX_CUP = 1000000
+const ITERATIONS = 10000000
 
 const run = async () => {
   let input = TESTING ? '389125467' : '157623984'
-  let cups = input.split('').map(Number)
 
-  let cup = cups[0]
-  for (let index = 0; index < 100; index++) ({ cups, cup } = move(cups, cup))
+  const cups = input.split('').map(Number)
+  for (let cup = 10; cup <= MAX_CUP; cup++) cups.push(cup)
 
-  const answerIndex = findCup(cups, 1)
-  const answer = [...cups.slice(answerIndex + 1), ...cups.slice(0, answerIndex)]
+  const cupPositions = {}
+  const positions = {}
 
-  console.log(`The answer is ${answer.join('')}.`)
+  const setNextPosition = (index, next) => {
+    positions[index] = next
+    cupPositions[cups[index]] = index
+  }
+  const getNextPosition = (index) => positions[index]
+  const getCupPosition = (cup) => cupPositions[cup]
+
+  cups.forEach((cup, index) => {
+    const next = index + 1
+    setNextPosition(index, next === cups.length ? 0 : next)
+  })
+
+  let currentIndex = 0
+  for (let n = 0; n < ITERATIONS; n++) {
+    const sliceStart = getNextPosition(currentIndex)
+    let sliceEnd = sliceStart
+    for (let d = 0; d < 2; d++) sliceEnd = getNextPosition(sliceEnd)
+    setNextPosition(currentIndex, getNextPosition(sliceEnd))
+    setNextPosition(sliceEnd, undefined)
+
+    const sliceCups = []
+    for (let i = sliceStart; i !== undefined; i = getNextPosition(i))
+      sliceCups.push(cups[i])
+
+    let findCup = deiterateCup(cups[currentIndex])
+    while (sliceCups.includes(findCup)) findCup = deiterateCup(findCup)
+
+    const destinationIndex = getCupPosition(findCup)
+
+    setNextPosition(sliceEnd, getNextPosition(destinationIndex))
+    setNextPosition(destinationIndex, sliceStart)
+
+    currentIndex = getNextPosition(currentIndex)
+  }
+
+  let nextIndex = getNextPosition(getCupPosition(1))
+  const answer = cups[nextIndex] * cups[getNextPosition(nextIndex)]
+
+  console.log(`The answer is ${answer}.`)
 }
 
-const move = (cups, cup) => {
-  const currentIndex = findCup(cups, cup)
-
-  const removeIndexes = getClockwise(cups, currentIndex)
-  const removed = removeIndexes.map((index) => cups[index])
-
-  cups = cups.filter((_, index) => !removeIndexes.includes(index))
-
-  const destinationIndex = findDestination(cups, cup)
-
-  cups = [
-    ...cups.slice(0, destinationIndex + 1),
-    ...removed,
-    ...cups.slice(destinationIndex + 1),
-  ]
-  cup = cups[(findCup(cups, cup) + 1) % cups.length]
-
-  return { cups, cup }
-}
-
-const findCup = (cups, cup) => cups.indexOf(cup)
-
-const getClockwise = (cups, currentCup) =>
-  [1, 2, 3].map((index) => (currentCup + index) % cups.length)
-
-const findDestination = (cups, cup) => {
-  const [min, max] = cups.reduce(
-    (arr, value) => [Math.min(value, arr[0]), Math.max(value, arr[1])],
-    [10, 0],
-  )
-  let nextCup = cup - 1
-  if (nextCup < min) nextCup = max
-
-  const destination = findCup(cups, nextCup)
-  return destination < 0 ? findDestination(cups, nextCup) : destination
-}
+const deiterateCup = (cup) => (--cup < MIN_CUP ? MAX_CUP : cup)
 
 run()
