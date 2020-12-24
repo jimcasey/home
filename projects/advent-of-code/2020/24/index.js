@@ -1,7 +1,7 @@
 const fs = require('fs')
 const util = require('util')
 
-const ITERATIONS = 16
+const ITERATIONS = 100
 
 const TESTING = !!process.env.TEST // 2208
 const INPUT_PATH = `${__dirname}/${TESTING ? 'test' : 'input'}.txt`
@@ -18,14 +18,23 @@ const run = async () => {
   const input = await readInput()
   const instructions = input.map(parseDirections)
   const positions = instructions.map(getPosition)
-  let tiles = positions.reduce(flipTile, {})
+  let tiles = {}
+  positions.forEach((position) => {
+    const id = getTileID(position)
+    tiles[id] = !tiles[id]
+  })
 
   for (let n = 0; n < ITERATIONS; n++) {
-    tiles = getEmptyTiles(tiles).reduce(addEmptyTile, tiles)
-    tiles = Object.keys(tiles)
+    getEmptyTiles(tiles).forEach(
+      (position) => (tiles[getTileID(position)] = false),
+    )
+    Object.keys(tiles)
       .map(parseTileID)
       .filter((position) => shouldFlip(tiles, position))
-      .reduce(flipTile, tiles)
+      .forEach((position) => {
+        const id = getTileID(position)
+        tiles[id] = !tiles[id]
+      })
   }
 
   const count = Object.values(tiles).filter((state) => !!state).length
@@ -54,19 +63,12 @@ const OFFSETS = {
 const getOffset = (direction) => OFFSETS[direction]
 const getOffsetPositions = (position) =>
   Object.values(OFFSETS).map((offset) => applyOffset(position, offset))
+
 const applyOffset = ([x, y, z], [x1, y1, z1]) => [x + x1, y + y1, z + z1]
 
 const getTileID = (position) => position.join(',')
 const parseTileID = (id) => id.split(',').map(Number)
 const getTileState = (tiles, position) => !!tiles[getTileID(position)]
-const addEmptyTile = (tiles, position) => ({
-  ...tiles,
-  [getTileID(position)]: false,
-})
-const flipTile = (tiles, position) => ({
-  ...tiles,
-  [getTileID(position)]: !getTileState(tiles, position),
-})
 
 const getAdjacentCount = (tiles, position) =>
   getOffsetPositions(position).reduce(
@@ -85,8 +87,9 @@ const shouldFlip = (tiles, position) => {
 }
 
 const getEmptyTiles = (tiles) =>
-  Object.keys(tiles)
-    .map(parseTileID)
+  Object.entries(tiles)
+    .filter(([id, state]) => state)
+    .map(([id, state]) => parseTileID(id))
     .reduce(
       (positions, position) => [
         ...positions,
@@ -98,12 +101,3 @@ const getEmptyTiles = (tiles) =>
     )
 
 run()
-
-const EXEC_TIME = {}
-const execTime = (key, fn) => {
-  const startMs = Date.now()
-  const result = fn()
-  if (!EXEC_TIME[key]) EXEC_TIME[key] = 0
-  EXEC_TIME[key] += Date.now() - startMs
-  return result
-}
