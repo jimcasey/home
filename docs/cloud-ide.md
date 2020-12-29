@@ -35,21 +35,51 @@ This iteration, aside from getting `code-server` going, I have two additional go
 
 When I originally explored an iPad development environment I made a few choices:
 
-- **DigitalOcean: Cloud Service Provider** DigitalOcean is straightforward, easy-to-use, flexible and the prices are reasonable, but to be honest, my primary motivator in choosing them over AWS or Google Cloud was not to give even more money to Amazon or Google.
-- **Ubuntu: Linux Distro**
-- **Blink: iOS Terminal Emulator**
-- **mosh: Mobile Shell**
+**Cloud Service Provider: DigitalOcean**
+DigitalOcean is straightforward, easy-to-use, flexible and the prices are reasonable, but to be honest, my primary motivator in choosing them over AWS or Google Cloud was not to give even more money to Amazon or Google.
+
+**Linux Distro: Ubuntu**
+
+**iOS Terminal Emulator: Blink**
+Blink has been my terminal of choice, as it's free and has all the features I need without trying too hard. Most importantly it supports [Mosh][15], which is essential to work around iOS dropping your SSH connection whenever the application is reaped from memory.
+
+Mosh has its drawbacks, however – the most annoying is not maintaining scrollback history – and some time finding a better combination is in my future. I've purchased [Prompt][15] but have not tested it, mostly because it doesn't support Mosh – [Terminus][14] is another option but I'm wary of the pricing plan (see "trying too hard" above). Other options to replace Mosh is some combination of Tmux][13] and [Eternal Terminal][12].
+
+[12]: https://eternalterminal.dev/
+[13]: https://github.com/tmux/tmux/wiki
+[14]: https://www.termius.com/
+[15]: https://mosh.org/
 
 ## Starting From Scratch
 
-### Create a new Droplet
+### Create a new Droplet:
 
 - [Create custom image in DigitalOcean][6]. The latest Ubuntu release at the time of writing is [20.10 Groovy Gorilla][5]. To save a few cents a month, this image can be removed after we spin up the Droplet.
 - Create a new droplet from the custom image. Requirements for `code-server` call for [at least 2 cores and 1 GB of RAM][7]; I chose the shared 4 CPU/8 GB option at $40/month, if I run into performance issues I can try the dedicated 2 CPU option at the same price.
 
+### Environment setup:
+
+- Update and install packages:
+
+  ```sh
+  apt update && apt upgrade
+  apt install git mosh vim zsh
+  ```
+
+- [Create a new SSH key and register with GitHub][8].
+- [Install Oh My Zsh][11]. I've made my Zsh theme, profile and aliases [available in GitHub][9], so at this point I'll check out this repo and run my [profile configuration script][10].
+
+### Set up DNS:
+
+### Create a snapshot:
+
 [5]: https://cloud-images.ubuntu.com/minimal/releases/groovy/
 [6]: https://www.digitalocean.com/blog/custom-images/?segment=1*6k6ado*s_amp_id*RnFrLXcwb1kxalNEc05ldDV6MFpqUWdOOGtQeWdleV9wdnVKcHA5cXlqOGJYOVpKcV9ST3lqLUlKc1RXUktSTw..
 [7]: https://github.com/cdr/code-server/blob/v3.8.0/doc/guide.md#requirements
+[8]: https://docs.github.com/en/free-pro-team@latest/github/authenticating-to-github/connecting-to-github-with-ssh
+[9]: ../profile
+[10]: ../profile/configure.sh
+[11]: https://ohmyz.sh/#install
 
 ## Installing `code-server`
 
