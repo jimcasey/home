@@ -60,18 +60,24 @@ Mosh has its drawbacks, however – the most annoying is not maintaining scroll
 ### Environment setup:
 
 - Update and install packages:
-
   ```sh
   apt update && apt upgrade
   apt install git mosh vim zsh
   ```
-
 - [Create a new SSH key and register with GitHub][8].
 - [Install Oh My Zsh][11]. I've made my Zsh theme, profile and aliases [available in GitHub][9], so at this point I'll check out this repo and run my [profile configuration script][10].
 
 ### Set up DNS:
 
+- Install DDClient:
+  ```sh
+  apt install ddclient
+  ```
+- I use Namecheap as my DNS provider; DDClient will run a configuration script, but [this reference][16] is useful for determining the correct properties.
+
 ### Create a snapshot:
+
+- At this point we're good to create a [snapshot of our Droplet][17].
 
 [5]: https://cloud-images.ubuntu.com/minimal/releases/groovy/
 [6]: https://www.digitalocean.com/blog/custom-images/?segment=1*6k6ado*s_amp_id*RnFrLXcwb1kxalNEc05ldDV6MFpqUWdOOGtQeWdleV9wdnVKcHA5cXlqOGJYOVpKcV9ST3lqLUlKc1RXUktSTw..
@@ -80,6 +86,8 @@ Mosh has its drawbacks, however – the most annoying is not maintaining scroll
 [9]: ../profile
 [10]: ../profile/configure.sh
 [11]: https://ohmyz.sh/#install
+[16]: https://www.namecheap.com/support/knowledgebase/article.aspx/583/11/how-do-i-configure-ddclient/
+[17]: https://www.digitalocean.com/docs/images/snapshots/how-to/snapshot-droplets/
 
 ## Installing `code-server`
 
