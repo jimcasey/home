@@ -42,7 +42,9 @@ Mosh has its drawbacks, however – the most annoying is not maintaining scroll
 ### Create a new Droplet:
 
 - [Create custom image in DigitalOcean][10]. The latest Ubuntu release at the time of writing is [20.10 Groovy Gorilla][11]. To save a few cents a month, this image can be removed after we spin up the Droplet.
-- Create a new droplet from the custom image. Requirements for `code-server` call for [at least 2 cores and 1 GB of RAM][12]; I chose the shared 4 CPU/8 GB option at $40/month, if I run into performance issues I can try the dedicated 2 CPU option at the same price.
+- Create a new droplet from the custom image.
+
+> I'd originally chosen the shared 4 CPU/8 GB option for my Droplet, only to find out that [snapshots can't be restored to Droplets smaller than the original instance][19]. As requirements for `code-server` call for [at least 2 cores and 1 GB of RAM][12], I started with the smaller shared 2 CPU/2 GB option.
 
 ### Environment setup:
 
@@ -60,7 +62,19 @@ Mosh has its drawbacks, however – the most annoying is not maintaining scroll
   ```sh
   apt install ddclient
   ```
-- I use Namecheap as my DNS provider; DDClient will run a configuration script, but [this reference][17] is useful for determining the correct properties.
+- I use Namecheap as my DNS provider; DDClient will run a configuration script, but [this reference][17] is useful for determining the correct properties, but for reference, this is the `/etc/ddclient.conf` that worked for me:
+  ```conf
+  use=web web=https://dynamicdns.park-your-domain.com/getip
+  protocol=namecheap
+  server=dynamicdns.park-your-domain.com
+  login=mydomain.tld
+  password=[redacted]
+  subdomain
+  ```
+- Test to see if it's working:
+  ```sh
+  ddclient -query
+  ```
 
 ### Create a snapshot:
 
@@ -90,3 +104,4 @@ _December 2020_
 [16]: ../profile/configure.sh
 [17]: https://www.namecheap.com/support/knowledgebase/article.aspx/583/11/how-do-i-configure-ddclient/
 [18]: https://www.digitalocean.com/docs/images/snapshots/how-to/snapshot-droplets/
+[19]: https://www.digitalocean.com/docs/images/snapshots/how-to/create-and-restore-droplets/#create-new-droplets-from-a-snapshot
