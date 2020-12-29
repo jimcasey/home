@@ -19,10 +19,15 @@ ZSH_THEME_GIT_PROMPT_RENAMED="%{$FG[220]%}➜"
 ZSH_THEME_GIT_PROMPT_UNMERGED="%{$FG[082]%}═"
 ZSH_THEME_GIT_PROMPT_UNTRACKED="%{$FG[190]%}✭"
 
+# indicate a remote prompt
+if [ -n "$SSH_CLIENT" ]; then
+  remote="%{$FG[105]%}↯ "
+fi
+
 # build the prompt
 # prompt reference: http://zsh.sourceforge.net/Doc/Release/Prompt-Expansion.html
 PROMPT='
-${time} ${working_directory} $(git_prompt_info)$(git_prompt_status)%{$reset_color%}
+${time} ${remote}${working_directory} $(git_prompt_info)$(git_prompt_status)%{$reset_color%}
 $ '
 
 # runtime reporting
