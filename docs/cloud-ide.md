@@ -2,7 +2,7 @@
 
 ## Impetus
 
-Earlier in the year my wife's laptop gave up the ghost. I set up a second user on my MacBook as a way to bridge our way to a fix or a replacement – a replacement that we never found a reason to find. I'd recently purchased an iPad Pro that was meeting most of my larger-device needs, and we could always pass the computer back and forth if need be. There is one glaring hole in this setup, however: writing software. Getting heads down in a side project is not particularly conducive to sharing a computer. I have a work machine, of course, but for a host of reasons I prefer not to use company-provided hardware for personal use.
+Earlier in the year my wife's laptop gave up the ghost. I set up a second user on my MacBook as a way to bridge our way to a fix or a replacement – that we never got around to. I'd recently purchased an iPad Pro that meets most of my needs, and we pass the computer back and forth as needed. There was one hole in this setup, however: writing software. Getting heads down in a side project is not particularly conducive to sharing a computer. I have a work machine, of course, but for a host of reasons I prefer not to use company-provided hardware for personal use.
 
 This led me to a question: **Is there any reason why I couldn't develop software completely on the iPad?**
 
@@ -136,7 +136,7 @@ certbot --non-interactive --redirect --agree-tos --nginx -d mydomain.com -m me@e
 
 ...and success! Navigating to `https://mydomain.com` loads Visual Studio Code in the browser.
 
-### Bonus setup:
+### Bonus:
 
 Since I've added my VSCode [settings and keybindings files][23] into this repo, I went ahead and created a link to the configuration directory for `code-server`:
 
@@ -151,8 +151,7 @@ As the [`code-server` docs attest][21], creating software on an iPad is not for 
 
 But in the meantime, as I'm not working ton of side projects, we'll give this a try. I'll check back in when I've done a little more playing around.
 
-_– Jim_
-_December 2020_
+_Jim – December 2020_
 
 [1]: https://micro-editor.github.io/
 [2]: ../projects/advent-of-code/2020
@@ -174,5 +173,5 @@ _December 2020_
 [18]: https://www.digitalocean.com/docs/images/snapshots/how-to/snapshot-droplets/
 [20]: https://github.com/cdr/code-server/blob/v3.8.0/doc/guide.md
 [22]: https://github.com/cdr/code-server/blob/v3.8.0/doc/guide.md#nginx
-[21]: https://github.com/cdr/code-server/blob/v3.8.0/doc/ipad.md#recommendations
 [23]: ../profile/vscode
+[21]: https://github.com/cdr/code-server/blob/v3.8.0/doc/ipad.md#recommendations
