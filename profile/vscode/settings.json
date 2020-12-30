@@ -1,0 +1,69 @@
+// Place your settings in this file to overwrite the default settings
+{
+  "editor.autoClosingBrackets": "never",
+  "editor.autoIndent": false,
+  "editor.detectIndentation": false,
+  "editor.dragAndDrop": false,
+  "editor.folding": false,
+  "editor.insertSpaces": true,
+  "editor.minimap.enabled": false,
+  "editor.renderIndentGuides": false,
+  "editor.renderLineHighlight": "none",
+  "editor.roundedSelection": false,
+  "editor.scrollBeyondLastLine": false,
+  "editor.smoothScrolling": true,
+  "editor.tabSize": 2,
+  "editor.trimAutoWhitespace": true,
+  "editor.wordWrap": "off",
+  "emmet.showExpandedAbbreviation": "never",
+  "explorer.confirmDelete": false,
+  "explorer.confirmDragAndDrop": false,
+  "extensions.ignoreRecommendations": false,
+  "files.insertFinalNewline": true,
+  "files.trimTrailingWhitespace": true,
+  "merge-conflict.codeLens.enabled": false,
+  "telemetry.enableCrashReporter": false,
+  "telemetry.enableTelemetry": false,
+  "window.newWindowDimensions": "inherit",
+  "window.openFilesInNewWindow": "off",
+  "window.restoreWindows": "all",
+  "window.title": "${rootName}",
+  "window.zoomLevel": 0,
+  "workbench.colorTheme": "Visual Studio Light",
+  "workbench.startupEditor": "newUntitledFile",
+  "search.exclude": {
+    "**/build-dev/*": true,
+    "**/build-prod/*": true,
+    "**/dist/*": true,
+    "**/*.svg": true
+  },
+  "editor.autoClosingQuotes": "never",
+  "editor.autoSurround": "never",
+  "prettier.requireConfig": true,
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[jsonc]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "html.autoClosingTags": false,
+  "javascript.autoClosingTags": false,
+  "window.restoreFullscreen": true,
+  "editor.suggestSelection": "first",
+  "vsintellicode.modify.editor.suggestSelection": "automaticallyOverrodeDefaultValue",
+  "[json]": {
+    "editor.defaultFormatter": "vscode.json-language-features"
+  },
+  "[html]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "editor.codeLens": false,
+  "diffEditor.ignoreTrimWhitespace": false,
+  "editor.renderControlCharacters": false,
+}
