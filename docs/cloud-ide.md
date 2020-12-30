@@ -8,11 +8,11 @@ I had a thought: **Why couldn't I develop software completely on the iPad?**
 
 I didn't see any reason why not. With improved keyboard and trackpad support, iPadOS has become bery comfortable for daily use. With GitHub and cloud storage, I've long since been untethered from needing persistent physical storage. There are options for iOS and iPadOS terminal emulators. And VM hosting means I can easily spin up whatever resources I happen to need in the cloud.
 
-So I set out to create an environment (much of which is outlined in _Setting the Stage_ below) where I could write, test and build new software, with moderate success and one big exception: **It's very hard for me to be productive writing code in a terminal editor.**
+So I set out to create an environment where I could write, test and build new software, finding moderate success and one big exception: **It's very hard for me to be productive writing code in a terminal editor.**
 
 I'd hoped that this experiment would give me an excuse to beef up my terminal editor chops – I've worked with wizards who never touch the mouse and write brilliant software with just a command prompt and a dream – but I came to Vim late in life. Sure, I can `:wq` my way around a configuration file, but that's about it. Sure, there are other editors – I used [micro][1] to complete the [Advent of Code][2] challenge this year – but a steep learning curve combined with sometimes challenging keyboard support, I need a better solution.
 
-Like most software engineers, my IDE setup is a extremely personal choice. I'm not one with a lot of requirements – I'm primarily write software for the web, a simple editor will do – and as such I've been using Visual Studio Code from its early days. In my latest search for a new editor I was happy to come across [`code-server`][3], a project that aims to bring a custom hosted Visual Studio Code to the browser.
+Like most people who write software, my IDE setup is a extremely personal choice. I'm not one with a lot of requirements – I'm primarily write software for the web, a simple editor will do – and as such I've been using Visual Studio Code from its early days. In my latest search for a new editor I was happy to come across [`code-server`][3], a project that aims to bring a custom hosted Visual Studio Code to the browser.
 
 Below is a chronicle of how I may be able to set up `code-server` and streamline the process spinning up a new development environment in the cloud.
 
