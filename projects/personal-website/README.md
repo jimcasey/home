@@ -1,3 +1,3 @@
-# parcel-react
+# personal-website
 
-A very simple, bare-bones TypeScript+React app built with the [Parcel bundler](https://parceljs.org/).
+Jim's personal website at [jim.codes](http://jim.codes).

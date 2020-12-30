@@ -9,11 +9,15 @@
     "start": "yarn clean && parcel index.html"
   },
   "devDependencies": {
+    "@types/react": "^17.0.0",
     "parcel-bundler": "^1.12.4",
     "prettier": "^2.2.1",
     "typescript": "^4.1.3"
   },
   "dependencies": {
+    "@emotion/react": "^11.1.4",
+    "@emotion/styled": "^11.0.0",
+    "emotion": "^11.0.0",
     "react": "^17.0.1",
     "react-dom": "^17.0.1"
   },
