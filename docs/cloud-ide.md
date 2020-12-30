@@ -10,9 +10,9 @@ I didn't see any reason why not. With improved keyboard and trackpad support, iP
 
 So I set out to create an environment where I could write, test and build new software, finding moderate success and one big exception: **It's very hard for me to be productive writing code in a terminal editor.**
 
-I'd hoped that this experiment would give me an excuse to beef up my terminal editor chops – I've worked with wizards who never touch the mouse and write brilliant software with just a command prompt and a dream – but I came to Vim late in life. Sure, I can `:wq` my way around a configuration file, but that's about it. Sure, there are other editors – I used [micro][1] to complete the [Advent of Code][2] challenge this year – but a steep learning curve combined with sometimes challenging keyboard support, I need a better solution.
+I'd hoped that this experiment would give me an excuse to beef up my terminal editor chops – I've worked with wizards who never touch the mouse and write brilliant software with just a command prompt and a dream – but I came to Vim late in life. I can `:wq` my way around a configuration file, but that's about it. Sure, there are other editors – I used [micro][1] to complete the [Advent of Code][2] challenge this year – but a steep learning curve combined with sometimes challenging keyboard support, I need a better solution.
 
-Like most people who write software, my IDE setup is a extremely personal choice. I'm not one with a lot of requirements – I primarily write software for the web and a simple editor will do – and as such Visual Studio Code has fit the bill for me since its inception. In my search for a new iPad IDE I was pleased to find [`code-server`][3], a project that brings a hosted Visual Studio Code to the browser.
+Like most people who write software, my IDE setup is a extremely personal choice. I'm don't have a ton of requirements – I primarily write software for the web and a simple editor will do – and as such Visual Studio Code has fit the bill for me since its inception. In my search for a new iPad IDE I was pleased to find [`code-server`][3], a project that brings a hosted Visual Studio Code to the browser.
 
 Below is chronicles how I was able to set up `code-server` and streamline the process spinning up a new development environment entirely in the cloud.
 
@@ -27,14 +27,11 @@ This iteration, aside from getting `code-server` going, I had two additional goa
 
 When I originally explored an iPad dev environment I had settled on a few choices:
 
-**Cloud Service Provider: DigitalOcean**
-Straightforward, easy-to-use, flexible, and the prices are reasonable – but to be honest, my primary motivator for DigitalOcean over AWS or Google Cloud was not to give more money to Amazon or Google.
+**Cloud Service Provider: DigitalOcean** – Straightforward, easy-to-use, flexible, and the prices are reasonable – but to be honest, my primary motivator over AWS or Google Cloud was not to give more money to Amazon or Google.
 
-**Linux Distro: Ubuntu**
-Easy, frequent updates and robust package availability made this a simple choice. Making things lightweight was a priority, so another distribution might be more appropriate – although Ubuntu does provide [minimal cloud images][4] that I used to build up a bare-bones server instance.
+**Linux Distro: Ubuntu** – Easy, frequent updates and robust package availability made this a simple choice. Making things lightweight was a priority, so another distribution might be more appropriate – although Ubuntu does provide [minimal cloud images][4] that I used to build up a bare-bones server instance.
 
-**iOS Terminal Emulator: Blink**
-[Blink][24] is my terminal of choice, as it's free, has all the features I need, and doesn't try too hard (an underrated quality in software). Most importantly it supports [Mosh][5], which is an essential workaround when iOS drops your SSH connection whenever the app is reaped from memory.
+**iOS Terminal Emulator: Blink** – [My terminal of choice][24], it's free, has all the features I need, and doesn't try too hard (an underrated quality in software). Most importantly it supports [Mosh][5], which is an essential workaround when iOS drops your SSH connection whenever the app is reaped from memory.
 
 Mosh has its drawbacks, however – the most annoying is not maintaining scrollback history – and it's probably time to find a better combination. I've purchased [Prompt][6] but have not tested it, mostly because it doesn't support Mosh. [Terminus][7] is another option, but I'm wary of the pricing plan (see "trying too hard" above). Other options to may include some combination of [Tmux][8] and [Eternal Terminal][9].
 
@@ -52,14 +49,14 @@ First up, since DigitalOcean doesn't include minimal Ubuntu images we'll we need
 
 ### Environment setup:
 
-Next, we'll update and install packages – I was surprised we only needed so few additional packages:
+Next, we'll update Ubuntu – I was surprised we could get away so few additional packages:
 
 ```sh
 apt update && apt upgrade
 apt install git mosh vim zsh
 ```
 
-> Note that all commands here assume we're running under the `root` user; if you're running under another user you'll have to `sudo` everything up.
+> Note that all commands here assume we're running under the `root` user, if you're running under another user you'll have to `sudo` everything up.
 
 I've made my Zsh theme, profile and aliases [available in this repo][15], so at this point we can [create a new SSH key, register with GitHub][13], clone and run my [profile configuration script][16].
 
@@ -71,7 +68,7 @@ Install DDClient so we can dynamically update our domain:
 apt install ddclient
 ```
 
-I use Namecheap as my DNS provider, and while DDClient will run a configuration script, it can be opaque. [This reference][17] was useful for determining the correct properties, but for reference, this the `/etc/ddclient.conf` that worked for me:
+I use Namecheap as my DNS provider, and while DDClient will run a configuration script, it can be opaque. [This reference][17] was useful for determining the correct properties, but this the `/etc/ddclient.conf` that worked for me:
 
 ```conf
 use=web web=https://dynamicdns.park-your-domain.com/getip
@@ -82,7 +79,7 @@ password=[redacted]
 mysubdomain
 ```
 
-Finally, run a query to test things out:
+Finally, run a query to check things out:
 
 ```sh
 ddclient -query
@@ -94,7 +91,7 @@ At this point we're ready to create a [snapshot of our droplet][18].
 
 ## Installing `code-server`
 
-`code-server` has a [detailed guide][20] for setting up an instance on Google Cloud; much of the installation and configuration are useful reference for us on DigitalOcean.
+`code-server` has a [detailed guide][20] for setting up an instance on Google Cloud, but much of the installation and configuration are useful reference for us on DigitalOcean.
 
 First step is to install the server:
 
