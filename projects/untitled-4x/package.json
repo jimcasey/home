@@ -1,7 +1,24 @@
 {
+  "name": "untitled-4x",
+  "version": "1.0.0",
+  "main": "./src/index.tsx",
+  "license": "UNLICENSED",
   "private": true,
-  "workspaces": [
-    "u4x-engine",
-    "u4x-playground"
-  ]
+  "scripts": {
+    "build": "yarn clean && parcel build ./u4x-playground/index.html",
+    "clean": "rm -rf dist",
+    "start": "yarn clean && parcel ./u4x-playground/index.html"
+  },
+  "devDependencies": {
+    "parcel-bundler": "^1.12.4",
+    "prettier": "^2.1.2",
+    "typescript": "^4.0.5"
+  },
+  "dependencies": {
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1"
+  },
+  "resolutions": {
+    "node-forge": "^0.10.0"
+  }
 }
