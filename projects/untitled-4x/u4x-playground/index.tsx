@@ -1,7 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 
-import { createGrid } from '../u4x-engine'
+import { createGrid } from '~u4x-engine'
 
 const grid = createGrid()
 console.log('grid', grid)
