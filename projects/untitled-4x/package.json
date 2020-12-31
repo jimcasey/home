@@ -1,0 +1,7 @@
+{
+  "private": true,
+  "workspaces": [
+    "u4x-engine",
+    "u4x-playground"
+  ]
+}
