@@ -1,7 +1,7 @@
 {
   "name": "untitled-4x",
   "version": "1.0.0",
-  "main": "./src/index.tsx",
+  "main": "./ux-playground/app.tsx",
   "license": "UNLICENSED",
   "private": true,
   "scripts": {
