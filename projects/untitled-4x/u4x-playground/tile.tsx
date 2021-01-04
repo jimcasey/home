@@ -5,8 +5,17 @@ import { Plot } from '~u4x-engine'
 
 const Hexagon = () => {
   return (
-    <svg xmlns="http://www.w3.org/2000/svg" x="0" y="0" viewBox="0 0 1000 1000">
-      <path d="M500 24.1l412.2 238V738L500 975.9 87.9 738V262L500 24.1m0-14.1L75.6 255v490L500 990l424.4-245V255L500 10z"></path>
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="174"
+      height="200"
+      viewBox="0 0 173.20508075688772 200"
+    >
+      <path
+        fill="#fff"
+        stroke="#000"
+        d="M73.61215932167728 7.499999999999999Q86.60254037844386 0 99.59292143521044 7.499999999999999L160.21469970012114 42.5Q173.20508075688772 50 173.20508075688772 65L173.20508075688772 135Q173.20508075688772 150 160.21469970012114 157.5L99.59292143521044 192.5Q86.60254037844386 200 73.61215932167728 192.5L12.99038105676658 157.5Q0 150 0 135L0 65Q0 50 12.99038105676658 42.5Z"
+      ></path>
     </svg>
   )
 }
@@ -24,11 +33,15 @@ const TileContainer = styled.div(
   `,
 )
 
-export const Tile = (props: Props) => (
-  <TileContainer {...props}>
-    <Hexagon />
-  </TileContainer>
-)
+export const Tile = (props: Props) => {
+  const height = Plot.getSide(props.width) * 2
+  console.log(props.width, height)
+  return (
+    <TileContainer {...props}>
+      <Hexagon />
+    </TileContainer>
+  )
+}
 
 interface Props {
   position: Plot.Position
