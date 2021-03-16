@@ -4,20 +4,17 @@
   "main": "./src/index.tsx",
   "license": "MIT",
   "scripts": {
-    "build": "yarn clean && parcel build index.html",
+    "build": "npm run clean && parcel build index.html",
     "clean": "rm -rf dist",
-    "start": "yarn clean && parcel index.html"
+    "start": "npm run clean && parcel index.html"
   },
   "devDependencies": {
-    "parcel-bundler": "^1.12.4",
-    "prettier": "^2.1.2",
-    "typescript": "^4.0.5"
+    "parcel-bundler": "^1.12.5",
+    "prettier": "^2.2.1",
+    "typescript": "^4.2.3"
   },
   "dependencies": {
     "react": "^17.0.1",
     "react-dom": "^17.0.1"
-  },
-  "resolutions": {
-    "node-forge": "^0.10.0"
   }
 }
