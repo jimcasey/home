@@ -36,4 +36,4 @@ alias dprune="docker system prune -af --volumes"
 alias dps="docker ps --format \"table {{.ID}}\t{{.Names}}\t{{.Command}}\t{{.Status}}\""
 
 # Node
-alias npr="npm run"
+npr() { npm run ${1} -- ${@:2} }
