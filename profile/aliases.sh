@@ -12,6 +12,7 @@ alias boop='osascript -e "display notification \"Command finished executing 👍
 
 # Git
 alias gamd="git commit -a --amend"
+alias gbra="git rev-parse --abbrev-ref HEAD | pbcopy"
 alias gcha="git commit --amend"
 alias gdel="$script_dir/scripts/gdel.sh"
 alias gdif="git diff"
