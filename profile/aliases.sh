@@ -38,3 +38,6 @@ alias dps="docker ps --format \"table {{.ID}}\t{{.Names}}\t{{.Command}}\t{{.Stat
 
 # Node
 npr() { npm run ${1} -- ${@:2} }
+
+# VSCode
+alias codew="code --reuse-window"
