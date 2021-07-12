@@ -75,7 +75,8 @@ normal="\033[0m"
 current_branch="$(git rev-parse --abbrev-ref HEAD)"
 delete_all=n
 should_skip=n
-skip_branches='master'
+master_branch=$(git show-ref --verify --quiet refs/heads/main && echo main || echo master)
+skip_branches="$master_branch"
 
 for arg; do
   if [[ ${arg:0:1} == '-' ]]; then
@@ -116,8 +117,9 @@ if [[ $delete_all == y ]]; then
 
       if [[ $input_response == y ]]; then
         if [[ $branch == $current_branch ]]; then
-          echo_warning 'Deleting current branch, checkout master...'
-          git checkout master
+
+          echo_warning "Deleting current branch, checkout $master_branch..."
+          git checkout $master_branch
         fi
 
         git branch -D $branch
@@ -129,15 +131,15 @@ if [[ $delete_all == y ]]; then
 else
   branch=${delete_branch:-$current_branch}
 
-  if [[ $branch == 'master' ]]; then
-    echo_exception 'Error: current branch is "master".'
+  if [[ $branch == $master_branch ]]; then
+    echo_exception "Error: current branch is \"${branch}\"."
   fi
 
   echo_warning 'This is a hard delete, unpushed changes will be discarded'
   ask_continue
 
   if [[ $branch == $current_branch ]]; then
-    git checkout master
+    git checkout $master_branch
   fi
 
   git branch -D $branch
