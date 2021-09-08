@@ -38,7 +38,7 @@ alias dprune='docker system prune -af --volumes'
 alias dps="docker ps --format \"table {{.ID}}\t{{.Names}}\t{{.Command}}\t{{.Status}}\""
 
 # Node
-alias denode='mv node_modules .deleting-node_modules && rm -rf .deleting-node_modules &> /dev/null &'
+alias denode='$(TMP=$(mktemp -d) && mv -f node_modules $TMP && rm -rf $TMP) &> /dev/null &'
 
 # VSCode
 alias codew='code --reuse-window .'
