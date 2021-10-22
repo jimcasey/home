@@ -4,7 +4,7 @@ script_dir="$(cd "$(dirname ${BASH_SOURCE[0]-$0})" && pwd)"
 
 # system
 alias ls='ls -1'
-alias ll='ls -l'
+alias ll='ls -lG'
 alias reprofile='source ~/.zshrc'
 alias copypk='cat ~/.ssh/id_rsa.pub | pbcopy'
 alias pbjson='pbpaste | python -m json.tool | bat -l json'
