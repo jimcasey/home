@@ -28,7 +28,6 @@
   "window.openFilesInNewWindow": "off",
   "window.restoreWindows": "all",
   "window.title": "${rootName}",
-  "window.zoomLevel": 0,
   "workbench.colorTheme": "Visual Studio Light",
   "workbench.startupEditor": "newUntitledFile",
   "search.exclude": {
@@ -66,4 +65,8 @@
   "editor.codeLens": false,
   "diffEditor.ignoreTrimWhitespace": false,
   "editor.renderControlCharacters": false,
+  "security.workspace.trust.untrustedFiles": "open",
+  "[markdown]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
 }
