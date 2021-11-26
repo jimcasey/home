@@ -51,12 +51,13 @@ error="\033[1;31m"
 warning="\033[1;33m"
 normal="\033[0m"
 current_branch="$(git rev-parse --abbrev-ref HEAD)"
+main_branch="$(git show-ref --verify --quiet refs/heads/main && echo main || echo master)"
 
-if [[ $current_branch == "master" ]]; then
-  echo_exception 'Error: current branch is "master".'
+if [[ $current_branch == $main_branch ]]; then
+  echo_exception "Error: current branch is '${main_branch}'."
 fi
 
-if [[ $(git diff master..$current_branch) == *"!!!"* ]]; then
+if [[ $(git diff $main_branch..$current_branch) == *"!!!"* ]]; then
   echo_warning 'Bangs exist in the diff.'
   ask_continue
 fi
