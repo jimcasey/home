@@ -10,7 +10,8 @@ function show_usage_and_exit() {
   echo
   echo "Options:"
   echo "  up               Copies files to the repository (default)"
-  echo "  down             Copies file to your VSCode settings directory"
+  echo "  down             Copies files to your VSCode settings directory"
+  echo "  -d, --diff       Show the diff between files"
   echo "  -h, --help       Show this help and exit"
   echo
   echo "Examples:"
@@ -61,11 +62,14 @@ ask_question() {
   echo
 }
 
+show_diff=n
 sync_direction=up
 
 for arg; do
   if [[ $arg == '-h' || $arg == '--help' ]]; then
     show_usage_and_exit
+  elif [[ $arg == '-d' || $arg == '--diff' ]]; then
+    show_diff=y
   elif [[ $arg == 'up' ]]; then
     sync_direction=up
   elif [[ $arg == 'down' ]]; then
@@ -85,6 +89,16 @@ normal="\033[0m"
 
 repo_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 settings_dir=$HOME/Library/Application\ Support/Code/User
+files=(keybindings.json settings.json)
+
+if [[ $show_diff == y ]]; then
+  for file in ${files[*]}; do
+    echo_action "Changes in $file:"
+    git diff "$settings_dir/$file" "$repo_dir/$file"
+    echo
+  done
+  exit 1
+fi
 
 if [[ $sync_direction == up ]]; then
   echo_action 'Synchronizing files to repository directory...'
@@ -104,7 +118,6 @@ echo_cmd "Source:      $source_dir"
 echo_cmd "Destination: $dest_dir"
 echo
 
-files=(keybindings.json settings.json)
 for file in ${files[*]}; do
   echo_cmd "Copying $file..."
   cp "$source_dir/$file" "$dest_dir/"
