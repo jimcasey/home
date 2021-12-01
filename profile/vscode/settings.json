@@ -1,13 +1,12 @@
 // Place your settings in this file to overwrite the default settings
 {
   "editor.autoClosingBrackets": "never",
-  "editor.autoIndent": false,
+  "editor.autoIndent": "none",
   "editor.detectIndentation": false,
   "editor.dragAndDrop": false,
   "editor.folding": false,
   "editor.insertSpaces": true,
   "editor.minimap.enabled": false,
-  "editor.renderIndentGuides": false,
   "editor.renderLineHighlight": "none",
   "editor.roundedSelection": false,
   "editor.scrollBeyondLastLine": false,
@@ -22,8 +21,6 @@
   "files.insertFinalNewline": true,
   "files.trimTrailingWhitespace": true,
   "merge-conflict.codeLens.enabled": false,
-  "telemetry.enableCrashReporter": false,
-  "telemetry.enableTelemetry": false,
   "window.newWindowDimensions": "inherit",
   "window.openFilesInNewWindow": "off",
   "window.restoreWindows": "all",
@@ -55,7 +52,6 @@
   "javascript.autoClosingTags": false,
   "window.restoreFullscreen": true,
   "editor.suggestSelection": "first",
-  "vsintellicode.modify.editor.suggestSelection": "automaticallyOverrodeDefaultValue",
   "[json]": {
     "editor.defaultFormatter": "vscode.json-language-features"
   },
@@ -69,4 +65,7 @@
   "[markdown]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
+  "cSpell.userWords": ["Vignesh"],
+  "python.pythonPath": "/opt/homebrew/bin/python3",
+  "python.formatting.autopep8Args": ["--indent-size=2"]
 }
