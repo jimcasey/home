@@ -9,7 +9,7 @@ with open(inputPath) as file:
 sums = list()
 for index, _ in enumerate(soundings):
   if index >= 2:
-    sums.append(sum(soundings[index-2:index+1]))
+    sums.append(sum(soundings[index - 2:index + 1]))
 
 increaseCount = 0
 lastSum = None
