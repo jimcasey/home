@@ -67,5 +67,9 @@
   },
   "cSpell.userWords": ["Vignesh"],
   "python.pythonPath": "/opt/homebrew/bin/python3",
-  "python.formatting.autopep8Args": ["--indent-size=2"]
+  "python.formatting.autopep8Args": [
+    "--indent-size=2",
+    "--ignore=E302,E305"
+  ],
+  "python.defaultInterpreterPath": "/opt/homebrew/bin/python3"
 }
