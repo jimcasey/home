@@ -1,53 +1,74 @@
 import os
+import re
 
 scriptPath = os.path.dirname(os.path.abspath(__file__))
 inputPath = scriptPath + '/input.txt'
 
 with open(inputPath) as file:
-  selections = list(map(int, file.readline().replace('\n', '').split(',')))
+  # parse the list of called numbers
+  calledNumbers = list(map(int, file.readline().replace('\n', '').split(',')))
+
+  # parse the boards
   boards = []
-  fills = []
   for line in file.read().splitlines():
     if line == '':
+      # blank line, add a new board
       boards.append([])
-      fills.append([0] * 10)
     else:
-      row = []
-      boards[len(boards) - 1].append(row)
-      for n in range(5):
-        start = n * 3
-        row.append(int(line[start:start + 2]))
+      # add a new row to the last board
+      boards[len(boards) - 1].append(list(map(int, re.findall('\d+', line))))
 
+# find the size of the board
+boardSize = len(boards[0][0])
+
+# initialize counts for possible wins in each board
+selectionCounts = [[0] * boardSize * 2 for _ in boards]
+
+# track whether we've found a solution for each board
 hasWon = [False] * len(boards)
-for selection in selections:
-  lastSelection = selection
+
+for calledNumber in calledNumbers:
+  # keep track of the last called number for calculating score
+  lastCalledNumber = calledNumber
+
   for boardIndex, board in enumerate(boards):
     if hasWon[boardIndex]:
+      # we don't care about this board since we've found a solution
       continue
+
     for rowIndex, row in enumerate(board):
-      try:
-        valueIndex = row.index(selection)
+      if calledNumber in row:
+        # called number is in this row, get the index
+        valueIndex = row.index(calledNumber)
+
+        # unset the value so we don't calculate it in the score
         row[valueIndex] = None
-        fills[boardIndex][rowIndex] += 1
-        fills[boardIndex][valueIndex + 5] += 1
-        for count in fills[boardIndex]:
-          if count == 5:
-            hasWon[boardIndex] = True
-            lastWinner = boardIndex
-            break
+
+        # count this selection for this row
+        selectionCounts[boardIndex][rowIndex] += 1
+        rowCount = selectionCounts[boardIndex][rowIndex]
+
+        # count this selection for this column
+        selectionCounts[boardIndex][valueIndex + boardSize] += 1
+        columnCount = selectionCounts[boardIndex][valueIndex + boardSize]
+
+        if rowCount == boardSize or columnCount == boardSize:
+          # we've got a winner
+          hasWon[boardIndex] = True
+          lastWinner = boardIndex
+
         break
-      except ValueError:
-        continue
-  try:
-    hasWon.index(False)
-  except ValueError:
+
+  if False not in hasWon:
+    # all boards have won
     break
 
+# calculate the score
 score = 0
 for row in boards[lastWinner]:
   for value in row:
     if value != None:
       score += value
-score = score * lastSelection
+score = score * lastCalledNumber
 
 print('The last winner score is ' + str(score) + '.')
