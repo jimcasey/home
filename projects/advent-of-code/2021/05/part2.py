@@ -1,54 +1,41 @@
 import os
 import re
+import math
 
 scriptPath = os.path.dirname(os.path.abspath(__file__))
 inputPath = scriptPath + '/input.txt'
 
-def toInts(arr):
-  return list(map(int, arr))
-
-def createKey(x, y):
-  return "{},{}".format(x, y)
-
 def findStep(offset):
-  if offset < 0:
-    return -1
-  if offset > 0:
-    return 1
-  return 0
+  return 0 if offset == 0 else int(math.copysign(1, offset))
 
 vents = {}
-maxX = 0
-maxY = 0
+intersections = 0
 
 with open(inputPath) as file:
-  for line in file.read().splitlines():
-    points = toInts(re.findall('\d+', line))
+  lines = file.read().splitlines()
 
-    x1, y1 = points[0:2]
-    x2, y2 = points[2:4]
+for line in lines:
+  x1, y1, x2, y2 = list(map(int, (re.findall('\d+', line))))
 
-    xOffset = x2 - x1
-    xStep = findStep(xOffset)
+  xOffset = x2 - x1
+  xStep = findStep(xOffset)
 
-    yOffset = y2 - y1
-    yStep = findStep(yOffset)
+  yOffset = y2 - y1
+  yStep = findStep(yOffset)
 
-    distance = max(abs(xOffset), abs(yOffset)) + 1
+  distance = max(abs(xOffset), abs(yOffset))
 
-    x = x1
-    y = y1
-    for _ in range(distance):
-      maxX = max(maxX, x)
-      maxY = max(maxY, y)
-      key = createKey(x, y)
-      vents[key] = vents[key] + 1 if key in vents else 1
-      x += xStep
-      y += yStep
+  x = x1
+  y = y1
+  for _ in range(distance + 1):
+    key = "{0},{1}".format(x, y)
 
-count = 0
-for value in vents.values():
-  if value > 1:
-    count += 1
+    vents[key] = vents[key] + 1 if key in vents else 1
 
-print(str(count) + ' vent lines intersect.')
+    if vents[key] == 2:
+      intersections += 1
+
+    x += xStep
+    y += yStep
+
+print(str(intersections) + ' vents intersect.')
