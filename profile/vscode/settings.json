@@ -25,7 +25,6 @@
   "window.openFilesInNewWindow": "off",
   "window.restoreWindows": "all",
   "window.title": "${rootName}",
-  "workbench.colorTheme": "Visual Studio Light",
   "workbench.startupEditor": "newUntitledFile",
   "search.exclude": {
     "**/build-dev/*": true,
@@ -65,11 +64,13 @@
   "[markdown]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
-  "cSpell.userWords": ["Vignesh"],
   "python.pythonPath": "/opt/homebrew/bin/python3",
-  "python.formatting.autopep8Args": [
-    "--indent-size=2",
-    "--ignore=E302,E305"
-  ],
-  "python.defaultInterpreterPath": "/opt/homebrew/bin/python3"
+  "python.formatting.autopep8Args": ["--indent-size=2", "--ignore=E302,E305"],
+  "python.defaultInterpreterPath": "/opt/homebrew/bin/python3",
+  "window.autoDetectColorScheme": true,
+  "workbench.colorCustomizations": {
+    "terminal.background": "#000000",
+    "terminal.foreground": "#e0e0e0"
+  },
+  "workbench.colorTheme": "Default Light+"
 }
