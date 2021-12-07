@@ -64,9 +64,9 @@
   "[markdown]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
-  "python.pythonPath": "/opt/homebrew/bin/python3",
+  "python.pythonPath": "${env:PYTHON_PATH}",
   "python.formatting.autopep8Args": ["--indent-size=2", "--ignore=E302,E305"],
-  "python.defaultInterpreterPath": "/opt/homebrew/bin/python3",
+  "python.defaultInterpreterPath": "${env:PYTHON_PATH}",
   "window.autoDetectColorScheme": true,
   "workbench.colorCustomizations": {
     "terminal.background": "#000000",
