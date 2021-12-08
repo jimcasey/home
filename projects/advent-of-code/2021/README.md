@@ -5,3 +5,4 @@
 ## Answers with additional annotation:
 
 - [Week 4, part 2](04/part2.py)
+- [Week 8, part 2](08/part2.py)
