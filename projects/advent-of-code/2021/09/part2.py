@@ -65,4 +65,4 @@ for index in range(3):
   length = basinLengths[index]
   product = length if not product else product * length
 
-print('Product of the three largest basins is {0}.'.format(product))
+print(f'Product of the three largest basins is {product}.')
