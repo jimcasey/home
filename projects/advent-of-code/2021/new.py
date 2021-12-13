@@ -3,11 +3,11 @@ import sys
 from shutil import copyfile
 
 class printc:
-  bright = "\033[1;36m"
-  error = "\033[1;31m"
-  gray = "\033[90m"
-  normal = "\033[0m"
-  warning = "\033[1;33m"
+  bright = '\033[1;36m'
+  error = '\033[1;31m'
+  gray = '\033[90m'
+  normal = '\033[0m'
+  warning = '\033[1;33m'
 
   def color(color, value): print(f'{color}{value}{printc.normal}')
   def act(value): printc.color(printc.bright, value)
