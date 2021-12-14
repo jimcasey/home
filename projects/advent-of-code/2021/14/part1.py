@@ -1,5 +1,4 @@
 import os
-import re
 from functools import reduce
 
 scriptPath = os.path.dirname(os.path.abspath(__file__))
@@ -24,15 +23,13 @@ def step(current):
 for _ in range(10):
   polymer = step(polymer)
 
-counts = None
-for element in rules.values():
-  count = polymer.count(element)
-  if counts == None:
-    counts = [count, count]
-  else:
-    counts[0] = min(counts[0], count)
-    counts[1] = max(counts[1], count)
+elementCounts = {}
+for element in polymer:
+  if not element in elementCounts.keys():
+    elementCounts[element] = 0
+  elementCounts[element] += 1
 
-minCount, maxCount = counts
+minCount = min(elementCounts.values())
+maxCount = max(elementCounts.values())
 
-print(f'Maximum less minimum frequency of letters is {maxCount - minCount}.')
+print(f'The answer is is {maxCount - minCount}.')
