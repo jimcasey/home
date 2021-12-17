@@ -1,6 +1,4 @@
 import os
-import sys
-import time
 
 scriptPath = os.path.dirname(os.path.abspath(__file__))
 inputPath = scriptPath + '/input.txt'
@@ -41,27 +39,50 @@ destination = f'{maxX},{maxY}'
 current = '0,0'
 distance = {}
 distance[current] = 0
-options = {}
+
+class Options:
+  __map = {}
+
+  def set(self, key, value):
+    try:
+      arr = self.__map[value]
+    except KeyError:
+      arr = self.__map[value] = []
+    arr.append(key)
+
+  def remove(self, key, value):
+    try:
+      self.__map[value].remove(key)
+      if len(self.__map[value]) == 0:
+        self.__map.pop(value)
+    except (KeyError, ValueError):
+      pass
+
+  def next(self):
+    value = self.__map[min(self.__map.keys())][0]
+    return value
+
+options = Options()
 
 while True:
   for neighbor in getNeighbors(current):
     if not visited[neighbor]:
-      distance[neighbor] = min(
-          distance[neighbor] if neighbor in distance else sys.maxsize,
-          distance[current] + density[neighbor]
-      )
-      options[neighbor] = distance[neighbor]
+      currentDistance = distance[current] + density[neighbor]
+      try:
+        neighborDistance = distance[neighbor]
+        options.remove(neighbor, neighborDistance)
+        distance[neighbor] = min(currentDistance, neighborDistance)
+      except KeyError:
+        distance[neighbor] = currentDistance
+
+      options.set(neighbor, distance[neighbor])
 
   if current == destination:
     break
 
   visited[current] = True
-  options.pop(current, None)
+  options.remove(current, distance[current])
 
-  minDistance = sys.maxsize
-  for key, value in options.items():
-    if value < minDistance:
-      current = key
-      minDistance = value
+  current = options.next()
 
 print(f'Shortest distance is {distance[destination]}.')
