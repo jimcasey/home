@@ -6,163 +6,210 @@ scriptPath = os.path.dirname(os.path.abspath(__file__))
 inputPath = scriptPath + '/input.txt'
 
 with open(inputPath) as file:
+  # eval the input to get numbers
   numbers = list(map(eval, file.read().splitlines()))
 
 class NumberMap:
-  items = []
-  root = {}
+  rootPair = []   # root node pair
+  leafNodes = []  # ordered list of leaf nodes
 
-  def set(self, number):
-    self.root, self.items = self.parse(number)
+  # parses the number and sets the root and items
+  def setNumber(self, number):
+    self.rootPair, self.leafNodes = self.parse(number)
 
-  def parse(self, pair, parent=None, depth=0):
-    nodes = []
-    items = []
-    for n in pair:
-      if isinstance(n, list):
+  # parses a number pair into a node pair and leaf nodes
+  def parse(self, numberPair, parentNode=None, depth=0):
+    nodePair = []
+    leafNodes = []
+
+    for number in numberPair:
+      if isinstance(number, list):
+        # node is a parent
         node = {
-            'type': 'list',
+            'type': 'parent',
             'depth': depth,
-            'parent': parent
+            'parentNode': parentNode
         }
-        depth += 1
-        childNodes, childItems = self.parse(n, node, depth)
-        depth -= 1
 
-        node['children'] = childNodes
-        nodes.append(node)
-        items += childItems
+        # get child nodes, all child leaf nodes
+        childNodes, childLeafNodes = self.parse(number, node, depth + 1)
+        node['childNodes'] = childNodes
+
+        # append to output
+        nodePair.append(node)
+        leafNodes += childLeafNodes
       else:
-        item = {
-            'type': 'int',
+        # node is a leaf
+        node = {
+            'type': 'leaf',
             'depth': depth,
-            'parent': parent,
-            'value': n
+            'parentNode': parentNode,
+            'value': number
         }
-        nodes.append(item)
-        items.append(item)
-    return nodes, items
 
-  def number(self, nodes=None):
-    if nodes == None:
-      return self.number(self.root)
+        # append to output
+        nodePair.append(node)
+        leafNodes.append(node)
+    return nodePair, leafNodes
+
+  # returns the number for the current number state
+  def number(self, nodePair=None):
+    if nodePair == None:
+      # start with the root pair if node pair is not provided
+      return self.number(self.rootPair)
 
     number = []
-    for node in nodes:
-      if node['type'] == 'list':
-        number.append(self.number(node['children']))
+    for node in nodePair:
+      if node['type'] == 'parent':
+        # append the numbers for all child nodes
+        number.append(self.number(node['childNodes']))
       else:
+        # append the number for leaf
         number.append(node['value'])
+
     return number
 
+  # adds a number to the current number state
   def add(self, number):
-    number = number if len(self.items) == 0 else [self.number()] + [number]
-    self.set(number)
+    # add numbers together if not in an empty state
+    number = number if len(self.leafNodes) == 0 else [self.number()] + [number]
+
+    # set the new number
+    self.setNumber(number)
+
+    # kick off a reduction
     self.reduce()
 
+  # reduces the current number state
   def reduce(self):
     while True:
+      # explode the number
       didExplode = self.explode()
       if not didExplode:
+        # no more explosions possible, split the number
         didSplit = self.split()
         if not didSplit:
+          # no more splits possible
           break
 
+  # explodes the current number state
   def explode(self):
     didExplode = False
 
-    for index in range(len(self.items)):
-      item = self.items[index]
-      if item['depth'] == 4:
+    # iterate through all leaves in order
+    for leafIndex in range(len(self.leafNodes)):
+      node = self.leafNodes[leafIndex]
+      if node['depth'] == 4:
+        # found a node to explode
         didExplode = True
 
-        prevIndex = index - 1
-        if prevIndex >= 0:
-          self.items[prevIndex]['value'] += item['value']
+        # find and update the previous leaf value, if available
+        leftNode = node
+        prevLeafIndex = leafIndex - 1
+        if prevLeafIndex >= 0:
+          self.leafNodes[prevLeafIndex]['value'] += leftNode['value']
 
-        nextIndex = index + 2
-        itemPair = self.items[index + 1]
-        if nextIndex < len(self.items):
-          self.items[nextIndex]['value'] += itemPair['value']
+        # find and update the next leaf value, if available
+        rightNode = self.leafNodes[leafIndex + 1]
+        nextLeafIndex = leafIndex + 2
+        if nextLeafIndex < len(self.leafNodes):
+          self.leafNodes[nextLeafIndex]['value'] += rightNode['value']
 
-        parent = item['parent']
+        # get the parent node
+        parentNode = leftNode['parentNode']
 
-        node = {
-            'type': 'int',
+        # create the replacement node with zero value one level up
+        replacementNode = {
+            'type': 'leaf',
             'depth': 3,
-            'parent': parent['parent'],
+            'parentNode': parentNode['parentNode'],
             'value': 0
         }
 
-        childIndex = node['parent']['children'].index(parent)
-        node['parent']['children'].remove(parent)
-        node['parent']['children'].insert(childIndex, node)
+        # remove parent node from its siblings and add the replacement
+        childNodes = replacementNode['parentNode']['childNodes']
+        childIndex = childNodes.index(parentNode)
+        childNodes.remove(parentNode)
+        childNodes.insert(childIndex, replacementNode)
 
-        self.items.remove(item)
-        self.items.remove(itemPair)
-        self.items.insert(index, node)
+        # remove the exploded leaf nodes and add the replacement
+        self.leafNodes.remove(leftNode)
+        self.leafNodes.remove(rightNode)
+        self.leafNodes.insert(leafIndex, replacementNode)
 
         break
 
     return didExplode
 
+  # splits the current number state
   def split(self):
     didSplit = False
 
-    index = 0
-    while index < len(self.items):
-      item = self.items[index]
-      if item['value'] > 9:
+    leafIndex = 0
+    while leafIndex < len(self.leafNodes):
+      node = self.leafNodes[leafIndex]
+      if node['value'] > 9:
+        # found a node to split
         didSplit = True
 
-        value = item['value']
-        depth = item['depth']
+        # get properties from the current node
+        value = node['value']
+        depth = node['depth']
+        parentNode = node['parentNode']
 
-        item['value'] = floor(value / 2)
-        item['depth'] += 1
+        # appropriate the node for the new left node
+        leftNode = node
+        leftNode['value'] = floor(value / 2)
+        leftNode['depth'] = depth + 1
 
-        itemPair = {
-            'type': 'int',
-            'depth': item['depth'],
+        # create the new right node
+        rightNode = {
+            'type': 'leaf',
+            'depth': depth + 1,
             'value': ceil(value / 2)
         }
 
-        index += 1
-        self.items.insert(index, itemPair)
+        # insert the new right node into the leaf nodes
+        leafIndex += 1
+        self.leafNodes.insert(leafIndex, rightNode)
 
-        parent = item['parent']
-        node = {
-            'type': 'list',
+        # create the replacement parent node
+        replacementNode = {
+            'type': 'parent',
             'depth': depth,
-            'parent': parent,
-            'children': [item, itemPair]
+            'parentNode': parentNode,
+            'childNodes': [leftNode, rightNode]
         }
-        item['parent'] = node
-        itemPair['parent'] = node
+        leftNode['parentNode'] = replacementNode
+        rightNode['parentNode'] = replacementNode
 
-        childIndex = parent['children'].index(item)
-        parent['children'].remove(item)
-        parent['children'].insert(childIndex, node)
+        # remove the split node and add the new parent node
+        childIndex = parentNode['childNodes'].index(node)
+        parentNode['childNodes'].remove(node)
+        parentNode['childNodes'].insert(childIndex, replacementNode)
 
         break
 
-      index += 1
+      leafIndex += 1
 
     return didSplit
 
-  def magnitude(self, nodes=None):
-    if nodes == None:
-      return self.magnitude(self.root)
+  # gets the magnitude for the current number state
+  def magnitude(self, nodePair=None):
+    if nodePair == None:
+      # start with the root pair if node pair is not provided
+      return self.magnitude(self.rootPair)
 
-    left, right = list(map(
+    # get left and right values
+    leftValue, rightValue = list(map(
         lambda node: (
-            node['value'] if node['type'] == 'int'
-            else self.magnitude(node['children'])
+            node['value'] if node['type'] == 'leaf'
+            else self.magnitude(node['childNodes'])
         ),
-        nodes
+        nodePair
     ))
 
-    return left * 3 + right * 2
+    return leftValue * 3 + rightValue * 2
 
 maxMagnitude = 0
 for a in range(len(numbers)):
