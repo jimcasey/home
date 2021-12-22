@@ -22,7 +22,8 @@ def main():
   # iterate through scanners until none are left
   while len(scannerMaps) > 0:
     # get the first scanner that shares at least three beacons with the field
-    neighbors = findMatchingNeighbors(field, scannerMaps)
+    fieldMap = createNeighborMap(field)
+    neighbors = findMatchingNeighbors(fieldMap, scannerMaps)
     scanner, fieldNeighbors, scannerNeighbors = neighbors
 
     # we've found a match, remove the scanner
@@ -103,8 +104,7 @@ def createNeighborMap(coords):
   return neighborMap
 
 # finds the first scanner that has a matching set of neighbors in the field
-def findMatchingNeighbors(field, scannerMaps):
-  fieldMap = createNeighborMap(field)
+def findMatchingNeighbors(fieldMap, scannerMaps):
   for fieldHash in fieldMap.keys():
     for scanner, scannerMap in scannerMaps:
       for scannerHash in scannerMap.keys():
@@ -162,8 +162,8 @@ def reorientCoords(orientation, coords):
   return [
       tuple([
           # rotation moves directions (x, y, z) relative to the field,
-          # direction flips it positive or negative (by multiplying with 1 or -1)
-          # and the offset slides the coordinate relative to the origin
+          # direction flips it positive or negative (by multiplying by 1 or -1)
+          # and the offset moves the coordinate relative to the field origin
           coord[rotation[index]] * direction[index] + offset[index]
           for index in range(3)
       ])
