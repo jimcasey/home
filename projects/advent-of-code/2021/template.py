@@ -1,6 +1,6 @@
-import os
+from os import path
 
-scriptPath = os.path.dirname(os.path.abspath(__file__))
+scriptPath = path.dirname(path.abspath(__file__))
 inputPath = scriptPath + '/test.txt'
 
 def main():
