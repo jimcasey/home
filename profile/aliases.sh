@@ -6,14 +6,13 @@ script_dir="$(cd "$(dirname ${BASH_SOURCE[0]-$0})" && pwd)"
 alias ls='ls -1'
 alias ll='ls -lG'
 alias reprofile='source ~/.zshrc'
-alias copypk='cat ~/.ssh/id_rsa.pub | pbcopy'
+alias copypk='cat $(ls ~/.ssh/*.pub | head -1) | pbcopy'
 alias pbjson='pbpaste | python -m json.tool | bat -l json'
 alias boop='osascript -e "display notification \"Command finished executing 👍\" with title \"Terminal\" sound name \"Submarine\""'
 
 # Git
 alias gamd='git commit -a --amend'
 alias gbra='git rev-parse --abbrev-ref HEAD | pbcopy'
-alias gcha='git commit --amend'
 alias gdel="$script_dir/scripts/gdel.sh"
 alias gdif='git diff'
 alias glas='git checkout -'
