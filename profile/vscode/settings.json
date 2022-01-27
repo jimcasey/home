@@ -74,6 +74,18 @@
   },
   "workbench.colorTheme": "Default Light+",
   "workbench.panel.defaultLocation": "right",
+  "files.exclude": {
+    "**/.classpath": true,
+    "**/.project": true,
+    "**/.settings": true,
+    "**/.factorypath": true
+  },
+  "java.imports.gradle.wrapper.checksums": [
+    {
+      "sha256": "60f0677e2da2a43e256fe1e869b5d49a7d419e6aa23aaa7beff10949329f1087",
+      "allowed": true
+    }
+  ],
   "terminal.integrated.cursorStyle": "line",
   "terminal.integrated.cursorBlinking": true
 }
