@@ -87,5 +87,8 @@
     }
   ],
   "terminal.integrated.cursorStyle": "line",
-  "terminal.integrated.cursorBlinking": true
+  "terminal.integrated.cursorBlinking": true,
+  "workbench.fontAliasing": "auto",
+  "terminal.integrated.scrollback": 10000,
+  "terminal.integrated.defaultProfile.osx": "zsh"
 }
