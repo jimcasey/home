@@ -40,4 +40,5 @@ alias dps="docker ps --format \"table {{.ID}}\t{{.Names}}\t{{.Command}}\t{{.Stat
 alias denode='$(TMP=$(mktemp -d) && mv -f node_modules $TMP && rm -rf $TMP) &> /dev/null &'
 
 # VSCode
+alias codea='code --add'
 alias codew='code --reuse-window'
