@@ -69,26 +69,23 @@
   "python.defaultInterpreterPath": "${env:PYTHON_PATH}",
   "window.autoDetectColorScheme": true,
   "workbench.colorCustomizations": {
+    "[Default Light+]": {
+      "sideBar.foreground": "#202020",
+      "gitDecoration.ignoredResourceForeground": "#202020a1",
+    },
     "terminal.background": "#000000",
     "terminal.foreground": "#e0e0e0"
   },
-  "workbench.colorTheme": "Default Light+",
-  "workbench.panel.defaultLocation": "right",
   "files.exclude": {
     "**/.classpath": true,
     "**/.project": true,
     "**/.settings": true,
     "**/.factorypath": true
   },
-  "java.imports.gradle.wrapper.checksums": [
-    {
-      "sha256": "60f0677e2da2a43e256fe1e869b5d49a7d419e6aa23aaa7beff10949329f1087",
-      "allowed": true
-    }
-  ],
   "terminal.integrated.cursorStyle": "line",
   "terminal.integrated.cursorBlinking": true,
   "workbench.fontAliasing": "auto",
   "terminal.integrated.scrollback": 10000,
-  "terminal.integrated.defaultProfile.osx": "zsh"
+  "terminal.integrated.defaultProfile.osx": "zsh",
+  "workbench.colorTheme": "Default Light+"
 }
