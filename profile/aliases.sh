@@ -33,8 +33,11 @@ alias gres='git checkout $(gmasb) && git fetch origin && git reset --hard origin
 alias gsta='git status'
 
 # Docker
+alias dkill='docker kill $(docker ps -q)'
 alias dprune='docker system prune -af --volumes'
 alias dps="docker ps --format \"table {{.ID}}\t{{.Names}}\t{{.Command}}\t{{.Status}}\""
+alias drm='docker rm $(docker ps -a -q)'
+alias drmi='docker rmi $(docker images -q)'
 
 # Node
 alias denode='$(TMP=$(mktemp -d) && mv -f node_modules $TMP && rm -rf $TMP) &> /dev/null &'
