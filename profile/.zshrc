@@ -70,7 +70,7 @@ ZSH_CUSTOM=$script_dir
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git vscode)
+# plugins=(git vscode)
 
 source $ZSH/oh-my-zsh.sh
 
