@@ -41,6 +41,7 @@ alias drmi='docker rmi $(docker images -q)'
 
 # Node
 alias denode='$(TMP=$(mktemp -d) && mv -f node_modules $TMP && rm -rf $TMP) &> /dev/null &'
+alias npy='npx --yes'
 
 # VSCode
 alias codea='code --add'
