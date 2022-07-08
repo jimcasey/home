@@ -17,7 +17,7 @@ alias gdel="$script_dir/scripts/gdel.sh"
 alias gdif='git diff'
 alias glas='git checkout -'
 alias glog='git log --pretty=oneline --abbrev-commit -10'
-alias gmas='git checkout gmasb'
+alias gmas='git checkout $(gmasb)'
 alias gmasb='git show-ref --verify --quiet refs/heads/main && echo main || echo master'
 alias gmasp='git checkout $(gmasb) && git pull'
 alias gmer='git checkout $(gmasb) && git pull && git checkout - && git merge $(gmasb)'
