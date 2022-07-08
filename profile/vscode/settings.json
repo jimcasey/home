@@ -71,7 +71,7 @@
   "workbench.colorCustomizations": {
     "[Default Light+]": {
       "sideBar.foreground": "#202020",
-      "gitDecoration.ignoredResourceForeground": "#202020a1",
+      "gitDecoration.ignoredResourceForeground": "#202020a1"
     },
     "terminal.background": "#000000",
     "terminal.foreground": "#e0e0e0"
@@ -87,5 +87,7 @@
   "workbench.fontAliasing": "auto",
   "terminal.integrated.scrollback": 10000,
   "terminal.integrated.defaultProfile.osx": "zsh",
-  "workbench.colorTheme": "Default Light+"
+  "workbench.colorTheme": "Default Light+",
+  "snyk.yesWelcomeNotification": false,
+  "git.mergeEditor": true
 }
