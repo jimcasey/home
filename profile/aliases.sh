@@ -9,6 +9,7 @@ alias reprofile='source ~/.zshrc'
 alias copypk='cat $(ls ~/.ssh/*.pub | head -1) | pbcopy'
 alias pbjson='pbpaste | python -m json.tool | bat -l json'
 alias boop='osascript -e "display notification \"Command finished executing 👍\" with title \"Terminal\" sound name \"Submarine\""'
+alias restartcal='launchctl stop com.apple.CalendarAgent && launchctl start com.apple.CalendarAgent'
 
 # Git
 alias gamd='git commit -a --amend'
