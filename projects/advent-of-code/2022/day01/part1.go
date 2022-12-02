@@ -1,8 +1,7 @@
 package day01
 
 import (
-	"fmt"
-	"jimcasey/aoc/utils"
+	u "jimcasey/aoc/utils"
 	"math"
 	"strconv"
 )
@@ -10,7 +9,7 @@ import (
 func Part1() {
 	var maxCalories float64 = 0
 	var currentCalories float64 = 0
-	for _, line := range utils.ReadInput("day01") {
+	for _, line := range u.Read("day01") {
 		if line == "" {
 			currentCalories = 0
 		} else {
@@ -20,5 +19,5 @@ func Part1() {
 		maxCalories = math.Max(maxCalories, currentCalories)
 	}
 
-	fmt.Println(maxCalories)
+	u.Out(maxCalories)
 }

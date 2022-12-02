@@ -1,8 +1,7 @@
 package day01
 
 import (
-	"fmt"
-	"jimcasey/aoc/utils"
+	u "jimcasey/aoc/utils"
 	"sort"
 	"strconv"
 )
@@ -10,7 +9,7 @@ import (
 func Part2() {
 	elves := make([]int, 1)
 
-	for _, line := range utils.ReadInput("day01") {
+	for _, line := range u.Read("day01") {
 		if line == "" {
 			elves = append(elves, 0)
 		} else {
@@ -25,5 +24,5 @@ func Part2() {
 		sum += calories
 	}
 
-	fmt.Println(sum)
+	u.Out(sum)
 }
