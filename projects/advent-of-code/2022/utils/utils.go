@@ -3,6 +3,7 @@ package utils
 import (
 	"bufio"
 	"flag"
+	"fmt"
 	"os"
 )
 
@@ -13,7 +14,11 @@ func InitState() {
 	flag.Parse()
 }
 
-func ReadInput(day string) []string {
+func Out(a ...any) (n int, err error) {
+	return fmt.Println(a...)
+}
+
+func Read(day string) []string {
 	var name string
 	if *isTest {
 		name = "test.txt"
