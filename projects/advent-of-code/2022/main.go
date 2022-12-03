@@ -1,11 +1,11 @@
 package main
 
 import (
-	"jimcasey/aoc/day02"
+	p "jimcasey/aoc/day03"
 	"jimcasey/aoc/utils"
 )
 
 func main() {
-	utils.InitState()
-	day02.Part2()
+	utils.Init()
+	p.Part2()
 }

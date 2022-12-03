@@ -9,7 +9,7 @@ import (
 
 var isTest *bool
 
-func InitState() {
+func Init() {
 	isTest = flag.Bool("test", false, "Run test input")
 	flag.Parse()
 }
