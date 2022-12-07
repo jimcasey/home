@@ -5,11 +5,15 @@ import (
 	"strings"
 )
 
+func init() {
+	utils.Register(3, part1, part2)
+}
+
 const priorities = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
 
-func Part1() {
+func part1() {
 	var sum int
-	for _, line := range utils.Read("day03") {
+	for _, line := range utils.Read() {
 		length := len(line) / 2
 		compartment1 := line[0:length]
 		compartment2 := line[length:]
@@ -33,9 +37,9 @@ func Part1() {
 	utils.Out(sum)
 }
 
-func Part2() {
+func part2() {
 	var lines []string
-	lines = append(lines, utils.Read("day03")...)
+	lines = append(lines, utils.Read()...)
 
 	var sum int
 	for group := 0; group < len(lines); group += 3 {
