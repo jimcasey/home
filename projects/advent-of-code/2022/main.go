@@ -1,7 +1,7 @@
 package main
 
 import (
-	p "jimcasey/aoc/day06"
+	p "jimcasey/aoc/day07"
 	"jimcasey/aoc/utils"
 )
 
