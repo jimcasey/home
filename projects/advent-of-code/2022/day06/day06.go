@@ -1,7 +1,7 @@
 package day06
 
 import (
-	u "jimcasey/aoc/utils"
+	"jimcasey/aoc/utils"
 )
 
 func findPosition(markerOffset int, message string) int {
@@ -25,13 +25,13 @@ func findPosition(markerOffset int, message string) int {
 }
 
 func Part1() {
-	for _, line := range u.Read("day06") {
-		u.Out(findPosition(4, line))
+	for _, line := range utils.Read("day06") {
+		utils.Out(findPosition(4, line))
 	}
 }
 
 func Part2() {
-	for _, line := range u.Read("day06") {
-		u.Out(findPosition(14, line))
+	for _, line := range utils.Read("day06") {
+		utils.Out(findPosition(14, line))
 	}
 }
