@@ -7,6 +7,10 @@ import (
 	"strings"
 )
 
+func init() {
+	utils.Register(7, part1, part2)
+}
+
 func getParent(path string) string {
 	dirs := strings.Split(path, "/")
 	return strings.Join(dirs[:len(dirs)-1], "/")
@@ -15,7 +19,7 @@ func getParent(path string) string {
 func parseInput() map[string]int {
 	sizeMap := make(map[string]int)
 	var path string
-	for _, line := range utils.Read("day07") {
+	for _, line := range utils.Read() {
 		if line == "$ ls" || strings.HasPrefix(line, "dir ") {
 			continue
 		}
@@ -42,7 +46,7 @@ func parseInput() map[string]int {
 	return sizeMap
 }
 
-func Part1() {
+func part1() {
 	sizeMap := parseInput()
 
 	cullSize := 0
@@ -54,7 +58,7 @@ func Part1() {
 	utils.Out(cullSize)
 }
 
-func Part2() {
+func part2() {
 	sizeMap := parseInput()
 
 	freeSpace := 70000000 - sizeMap["~"]

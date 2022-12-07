@@ -7,10 +7,14 @@ import (
 	"strconv"
 )
 
-func Part1() {
+func init() {
+	utils.Register(1, part1, part2)
+}
+
+func part1() {
 	var maxCalories float64 = 0
 	var currentCalories float64 = 0
-	for _, line := range utils.Read("day01") {
+	for _, line := range utils.Read() {
 		if line == "" {
 			currentCalories = 0
 		} else {
@@ -23,10 +27,10 @@ func Part1() {
 	utils.Out(maxCalories)
 }
 
-func Part2() {
+func part2() {
 	elves := make([]int, 1)
 
-	for _, line := range utils.Read("day01") {
+	for _, line := range utils.Read() {
 		if line == "" {
 			elves = append(elves, 0)
 		} else {

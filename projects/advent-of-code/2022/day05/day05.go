@@ -6,6 +6,10 @@ import (
 	"strings"
 )
 
+func init() {
+	utils.Register(5, part1, part2)
+}
+
 type StackMap = map[int][]string
 type Move = map[string]int
 
@@ -13,7 +17,7 @@ func parseInput() (StackMap, []Move) {
 	stacks := make(StackMap)
 	var moves []Move
 
-	for _, line := range utils.Read("day05") {
+	for _, line := range utils.Read() {
 		if strings.Contains(line, "[") {
 			stack := 0
 			for i := 1; i < len(line); i += 4 {
@@ -53,7 +57,7 @@ func getTopCrates(stacks StackMap) string {
 	return topCrates
 }
 
-func Part1() {
+func part1() {
 	stacks, moves := parseInput()
 
 	for _, move := range moves {
@@ -70,7 +74,7 @@ func Part1() {
 	utils.Out(getTopCrates(stacks))
 }
 
-func Part2() {
+func part2() {
 	stacks, moves := parseInput()
 
 	for _, move := range moves {
