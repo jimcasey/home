@@ -23,7 +23,7 @@ func parseInput() (map[Coord]int, Coord) {
 		for x, tree := range line {
 			limit.x = utils.Max(limit.x, x)
 			height, _ := strconv.Atoi(string(tree))
-			grid[Coord{x: x, y: y}] = height
+			grid[Coord{x, y}] = height
 		}
 	}
 	return grid, limit
@@ -39,7 +39,7 @@ func part1() {
 		var p []Coord
 		var pRev []Coord
 		for y := 0; y <= limit.y; y++ {
-			coord := Coord{x: x, y: y}
+			coord := Coord{x, y}
 			p = append(p, coord)
 			pRev = append([]Coord{coord}, pRev...)
 		}
@@ -51,7 +51,7 @@ func part1() {
 		var p []Coord
 		var pRev []Coord
 		for x := 0; x <= limit.x; x++ {
-			coord := Coord{x: x, y: y}
+			coord := Coord{x, y}
 			p = append(p, coord)
 			pRev = append([]Coord{coord}, pRev...)
 		}
@@ -60,10 +60,10 @@ func part1() {
 	}
 
 	visible := map[Coord]struct{}{
-		{x: 0, y: 0}:             {},
-		{x: limit.x, y: 0}:       {},
-		{x: 0, y: limit.y}:       {},
-		{x: limit.x, y: limit.y}: {},
+		{0, 0}:             {},
+		{limit.x, 0}:       {},
+		{0, limit.y}:       {},
+		{limit.x, limit.y}: {},
 	}
 
 	for _, p := range searchPatterns {
@@ -101,9 +101,9 @@ func part2() {
 
 	maxScore := 0
 	for coord := range grid {
-		up := findVisible(coord, func(c Coord) Coord { c.y++; return c })
+		up := findVisible(coord, func(c Coord) Coord { c.y--; return c })
 		right := findVisible(coord, func(c Coord) Coord { c.x++; return c })
-		down := findVisible(coord, func(c Coord) Coord { c.y--; return c })
+		down := findVisible(coord, func(c Coord) Coord { c.y++; return c })
 		left := findVisible(coord, func(c Coord) Coord { c.x--; return c })
 		maxScore = utils.Max(maxScore, left*right*up*down)
 	}
