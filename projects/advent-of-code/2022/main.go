@@ -8,6 +8,7 @@ import (
 	_ "jimcasey/aoc/day05"
 	_ "jimcasey/aoc/day06"
 	_ "jimcasey/aoc/day07"
+	_ "jimcasey/aoc/day08"
 	"jimcasey/aoc/utils"
 )
 
