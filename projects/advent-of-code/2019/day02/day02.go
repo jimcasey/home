@@ -10,16 +10,17 @@ func init() {
 }
 
 func part1() {
-	program := intcode.Parse(utils.Read()[0])
-	utils.Out(intcode.Run(program, 12, 2))
+	program := utils.Read()[0]
+	app := intcode.NewApp(program, 12, 2)
+	utils.Out(app.Exec())
 }
 
 func part2() {
-	program := intcode.Parse(utils.Read()[0])
+	program := utils.Read()[0]
 	for noun := 0; noun <= 100; noun++ {
 		for verb := 0; verb <= 100; verb++ {
-			result := intcode.Run(program, noun, verb)
-			if result == 19690720 {
+			app := intcode.NewApp(program, noun, verb)
+			if app.Exec() == 19690720 {
 				utils.Out(100*noun + verb)
 				return
 			}
