@@ -77,3 +77,34 @@ func Min(x int, y int) int {
 func Abs(x int) int {
 	return int(math.Abs(float64(x)))
 }
+
+func Copy[T any](arr []T) []T {
+	tmp := make([]T, len(arr))
+	copy(tmp, arr)
+	return tmp
+}
+
+func Permutations(phases []int) [][]int {
+	var result [][]int
+	var helper func([]int, int)
+	helper = func(arr []int, n int) {
+		if n == 1 {
+			result = append(result, Copy(arr))
+		} else {
+			for i := 0; i < n; i++ {
+				helper(arr, n-1)
+				if n%2 == 1 {
+					tmp := arr[i]
+					arr[i] = arr[n-1]
+					arr[n-1] = tmp
+				} else {
+					tmp := arr[0]
+					arr[0] = arr[n-1]
+					arr[n-1] = tmp
+				}
+			}
+		}
+	}
+	helper(phases, len(phases))
+	return result
+}
