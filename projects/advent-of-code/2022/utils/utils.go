@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"math"
 	"os"
+	"strconv"
 )
 
 var registry map[int][]func()
@@ -64,6 +65,11 @@ func Read() []string {
 
 func Out(a ...any) (n int, err error) {
 	return fmt.Println(a...)
+}
+
+func ToInt(s string) int {
+	i, _ := strconv.Atoi(s)
+	return i
 }
 
 func Max(x int, y int) int {
