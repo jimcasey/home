@@ -6,7 +6,7 @@ import (
 )
 
 func init() {
-	utils.Register(9, part2)
+	utils.Register(9, part1, part2)
 }
 
 func part1() {

@@ -10,6 +10,7 @@ import (
 	_ "jimcasey/aoc/day07"
 	_ "jimcasey/aoc/day08"
 	_ "jimcasey/aoc/day09"
+	_ "jimcasey/aoc/day10"
 	"jimcasey/aoc/utils"
 )
 
