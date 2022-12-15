@@ -17,29 +17,71 @@ import (
 // parameter modes:
 // 		(0) position mode: memory address
 // 		(1) immediate mode: value at the parameter
+//    (2) relative mode: value at parameter relative to base
 
 type App struct {
-	Status  string // waiting, done
-	memory  []int
-	pointer int
+	Status       string // waiting, done
+	memory       map[int]int
+	pointer      int
+	relativeBase int
+	output       []int
+}
+
+func NewApp(program string, inputs ...int) App {
+	app := App{
+		"waiting",
+		make(map[int]int),
+		0,
+		0,
+		[]int{},
+	}
+
+	for i, s := range strings.Split(program, ",") {
+		value, _ := strconv.Atoi(s)
+		app.memory[i] = value
+	}
+
+	for i, input := range inputs {
+		app.memory[i+1] = input
+	}
+
+	return app
 }
 
 func (app *App) read(position int) int {
 	op := app.memory[app.pointer]
 	mode := op / int(math.Pow(10, float64(position)+1)) % 10
 
+	var address int
 	switch mode {
 	case 0:
-		return app.memory[app.memory[app.pointer+position]]
+		address = app.memory[app.pointer+position]
 	case 1:
-		return app.memory[app.pointer+position]
+		address = app.pointer + position
+	case 2:
+		address = app.relativeBase + app.memory[app.pointer+position]
 	}
 
-	return 0
+	value, exists := app.memory[address]
+	if !exists {
+		return 0
+	}
+	return value
 }
 
 func (app *App) write(position int, x int) {
-	app.memory[app.memory[app.pointer+position]] = x
+	op := app.memory[app.pointer]
+	mode := op / int(math.Pow(10, float64(position)+1)) % 10
+
+	var address int
+	switch mode {
+	case 0:
+		address = app.memory[app.pointer+position]
+	case 2:
+		address = app.relativeBase + app.memory[app.pointer+position]
+	}
+
+	app.memory[address] = x
 }
 
 func (app *App) writeBool(position int, x bool) {
@@ -50,8 +92,8 @@ func (app *App) writeBool(position int, x bool) {
 	app.write(position, value)
 }
 
-func (app *App) Result() int {
-	return app.memory[0]
+func (app *App) Output() []int {
+	return app.output
 }
 
 func (app *App) Exec(inputs ...int) int {
@@ -72,12 +114,13 @@ func (app *App) Exec(inputs ...int) int {
 				inputs = inputs[1:]
 			} else {
 				app.Status = "waiting"
-				return app.Result()
+				return app.memory[0]
 			}
 			app.write(1, input)
 			app.pointer += 2
 		case 4: // output
 			app.memory[0] = app.read(1)
+			app.output = append(app.output, app.memory[0])
 			app.pointer += 2
 		case 5: // jump-if-true
 			if app.read(1) != 0 {
@@ -97,113 +140,12 @@ func (app *App) Exec(inputs ...int) int {
 		case 8: // equals
 			app.writeBool(3, app.read(1) == app.read(2))
 			app.pointer += 4
+		case 9: // adjust relative base
+			app.relativeBase += app.read(1)
+			app.pointer += 2
 		}
 	}
 
 	app.Status = "done"
-	return app.Result()
+	return app.memory[0]
 }
-
-func NewApp(program string, inputs ...int) App {
-	app := App{
-		Status:  "waiting",
-		memory:  []int{},
-		pointer: 0,
-	}
-
-	for _, s := range strings.Split(program, ",") {
-		op, _ := strconv.Atoi(s)
-		app.memory = append(app.memory, op)
-	}
-
-	for i, input := range inputs {
-		app.memory[i+1] = input
-	}
-
-	return app
-}
-
-// func Load(program []int, inputs ...int) []int {
-// 	memory := make([]int, len(program))
-// 	for i, input := range inputs {
-// 		memory[i+1] = input
-// 	}
-// 	copy(memory, program)
-// 	return memory
-// }
-
-// func Run(memory []int, inputs ...int) ([]int, string) {
-// 	var pointer int
-
-// 	read := func(position int) int {
-// 		op := memory[pointer]
-// 		mode := op / int(math.Pow(10, float64(position)+1)) % 10
-
-// 		switch mode {
-// 		case 0:
-// 			return memory[memory[pointer+position]]
-// 		case 1:
-// 			return memory[pointer+position]
-// 		}
-
-// 		return 0
-// 	}
-
-// 	write := func(position int, x int) {
-// 		memory[memory[pointer+position]] = x
-// 	}
-
-// 	writeBool := func(position int, x bool) {
-// 		value := 0
-// 		if x {
-// 			value = 1
-// 		}
-// 		write(position, value)
-// 	}
-
-// 	for pointer = 0; memory[pointer] != 99; {
-// 		opcode := memory[pointer] % 100
-
-// 		switch opcode {
-// 		case 1: // addition
-// 			write(3, read(1)+read(2))
-// 			pointer += 4
-// 		case 2: // multiplication
-// 			write(3, read(1)*read(2))
-// 			pointer += 4
-// 		case 3: // input
-// 			var input int
-// 			if len(inputs) > 0 {
-// 				input = inputs[0]
-// 				inputs = inputs[1:]
-// 			} else {
-// 				return memory, "input-needed"
-// 			}
-// 			write(1, input)
-// 			pointer += 2
-// 		case 4: // output
-// 			memory[0] = read(1)
-// 			pointer += 2
-// 		case 5: // jump-if-true
-// 			if read(1) != 0 {
-// 				pointer = read(2)
-// 			} else {
-// 				pointer += 3
-// 			}
-// 		case 6: // jump-if-false
-// 			if read(1) == 0 {
-// 				pointer = read(2)
-// 			} else {
-// 				pointer += 3
-// 			}
-// 		case 7: // less than
-// 			writeBool(3, read(1) < read(2))
-// 			pointer += 4
-// 		case 8: // equals
-// 			writeBool(3, read(1) == read(2))
-// 			pointer += 4
-// 		}
-// 	}
-
-// 	return memory, "done"
-// }
