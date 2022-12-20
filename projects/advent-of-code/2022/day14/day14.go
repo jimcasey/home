@@ -1,19 +1,19 @@
 package day14
 
 import (
-	"jimcasey/aoc/utils"
+	u "jimcasey/aoc/utils"
 	"strings"
 )
 
 func init() {
-	utils.Register(14, part1, part2)
+	u.Register(14, part1, part2)
 }
 
 func NewCoord(str string) Coord {
 	arr := strings.Split(str, ",")
 	return Coord{
-		utils.ToInt(arr[0]),
-		utils.ToInt(arr[1]),
+		u.ToInt(arr[0]),
+		u.ToInt(arr[1]),
 	}
 }
 
@@ -40,7 +40,7 @@ type Cave struct {
 
 func (cave *Cave) addRock(coord Coord) {
 	cave.rocks[coord] = struct{}{}
-	cave.floor = utils.Max(cave.floor, coord.y+2)
+	cave.floor = u.Max(cave.floor, coord.y+2)
 }
 func (cave *Cave) addSand(coord Coord) {
 	cave.sand[coord] = struct{}{}
@@ -78,14 +78,14 @@ func (cave *Cave) dropSand(coord Coord) bool {
 func run(hasFloor bool) {
 	cave := NewCave(hasFloor)
 
-	for _, line := range utils.Read() {
+	for _, line := range u.Read() {
 		nodes := strings.Split(line, " -> ")
 		for i := 1; i < len(nodes); i++ {
 			a := NewCoord(nodes[i-1])
 			b := NewCoord(nodes[i])
 
-			for x := utils.Min(a.x, b.x); x <= utils.Max(a.x, b.x); x++ {
-				for y := utils.Min(a.y, b.y); y <= utils.Max(a.y, b.y); y++ {
+			for x := u.Min(a.x, b.x); x <= u.Max(a.x, b.x); x++ {
+				for y := u.Min(a.y, b.y); y <= u.Max(a.y, b.y); y++ {
 					cave.addRock(Coord{x, y})
 				}
 			}
@@ -94,7 +94,7 @@ func run(hasFloor bool) {
 
 	for cave.dropSand(Coord{500, 0}) {
 	}
-	utils.Out(len(cave.sand))
+	u.Out(len(cave.sand))
 }
 
 func part1() {

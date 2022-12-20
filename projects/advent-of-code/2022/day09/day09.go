@@ -1,13 +1,13 @@
 package day09
 
 import (
-	"jimcasey/aoc/utils"
+	u "jimcasey/aoc/utils"
 	"strconv"
 	"strings"
 )
 
 func init() {
-	utils.Register(9, part1, part2)
+	u.Register(9, part1, part2)
 }
 
 type Coord struct {
@@ -19,7 +19,7 @@ func run(ropeLength int) {
 	rope := make([]Coord, ropeLength)
 	tailPositions := make(map[Coord]struct{})
 
-	for _, line := range utils.Read() {
+	for _, line := range u.Read() {
 		split := strings.Split(line, " ")
 		direction := split[0]
 		distance, _ := strconv.Atoi(split[1])
@@ -43,16 +43,16 @@ func run(ropeLength int) {
 				prev := rope[i-1]
 				offset := Coord{prev.x - rope[i].x, prev.y - rope[i].y}
 
-				if utils.Abs(offset.x) > 1 || utils.Abs(offset.y) > 1 {
-					rope[i].x += offset.x / utils.Max(utils.Abs(offset.x), 1)
-					rope[i].y += offset.y / utils.Max(utils.Abs(offset.y), 1)
+				if u.Abs(offset.x) > 1 || u.Abs(offset.y) > 1 {
+					rope[i].x += offset.x / u.Max(u.Abs(offset.x), 1)
+					rope[i].y += offset.y / u.Max(u.Abs(offset.y), 1)
 				}
 			}
 			tailPositions[rope[len(rope)-1]] = struct{}{}
 		}
 	}
 
-	utils.Out(len(tailPositions))
+	u.Out(len(tailPositions))
 }
 
 func part1() {

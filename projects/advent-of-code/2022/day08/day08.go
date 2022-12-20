@@ -1,12 +1,12 @@
 package day08
 
 import (
-	"jimcasey/aoc/utils"
+	u "jimcasey/aoc/utils"
 	"strconv"
 )
 
 func init() {
-	utils.Register(8, part1, part2)
+	u.Register(8, part1, part2)
 }
 
 type Coord struct {
@@ -18,10 +18,10 @@ func parseInput() (map[Coord]int, Coord) {
 	grid := make(map[Coord]int)
 
 	limit := Coord{}
-	for y, line := range utils.Read() {
-		limit.y = utils.Max(limit.y, y)
+	for y, line := range u.Read() {
+		limit.y = u.Max(limit.y, y)
 		for x, tree := range line {
-			limit.x = utils.Max(limit.x, x)
+			limit.x = u.Max(limit.x, x)
 			height, _ := strconv.Atoi(string(tree))
 			grid[Coord{x, y}] = height
 		}
@@ -73,11 +73,11 @@ func part1() {
 			if current > highest {
 				visible[coord] = struct{}{}
 			}
-			highest = utils.Max(highest, current)
+			highest = u.Max(highest, current)
 		}
 	}
 
-	utils.Out(len(visible))
+	u.Out(len(visible))
 }
 
 func part2() {
@@ -105,8 +105,8 @@ func part2() {
 		right := findVisible(coord, func(c Coord) Coord { c.x++; return c })
 		down := findVisible(coord, func(c Coord) Coord { c.y++; return c })
 		left := findVisible(coord, func(c Coord) Coord { c.x--; return c })
-		maxScore = utils.Max(maxScore, left*right*up*down)
+		maxScore = u.Max(maxScore, left*right*up*down)
 	}
 
-	utils.Out(maxScore)
+	u.Out(maxScore)
 }

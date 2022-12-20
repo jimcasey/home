@@ -1,12 +1,12 @@
 package day15
 
 import (
-	"jimcasey/aoc/utils"
+	u "jimcasey/aoc/utils"
 	"strings"
 )
 
 func init() {
-	utils.Register(15, part1, part2)
+	u.Register(15, part1, part2)
 }
 
 type Coord struct {
@@ -15,7 +15,7 @@ type Coord struct {
 }
 
 func (coord *Coord) abs() Coord {
-	return Coord{utils.Abs(coord.x), utils.Abs(coord.y)}
+	return Coord{u.Abs(coord.x), u.Abs(coord.y)}
 }
 func (a *Coord) add(b Coord) Coord {
 	return Coord{a.x + b.x, a.y + b.y}
@@ -35,14 +35,14 @@ func (a *Coord) inRange(min Coord, max Coord) bool {
 func parseInput() (map[Coord]int, map[Coord]struct{}) {
 	sensors := make(map[Coord]int)
 	beacons := make(map[Coord]struct{})
-	for _, line := range utils.Read() {
+	for _, line := range u.Read() {
 		line = strings.Replace(line, "Sensor at x=", "", -1)
 		line = strings.Replace(line, ": closest beacon is at x=", ",", -1)
 		line = strings.Replace(line, " y=", "", -1)
 		split := strings.Split(line, ",")
 
-		sensor := Coord{utils.ToInt(split[0]), utils.ToInt(split[1])}
-		beacon := Coord{utils.ToInt(split[2]), utils.ToInt(split[3])}
+		sensor := Coord{u.ToInt(split[0]), u.ToInt(split[1])}
+		beacon := Coord{u.ToInt(split[2]), u.ToInt(split[3])}
 
 		sensors[sensor] = sensor.distance(beacon)
 		beacons[beacon] = struct{}{}
@@ -72,7 +72,7 @@ func part1() {
 		}
 	}
 
-	utils.Out(len(empty)) // 5112034
+	u.Out(len(empty)) // 5112034
 }
 
 func part2() {
@@ -110,7 +110,7 @@ search:
 				continue search
 			}
 		}
-		utils.Out(coord, (coord.x*4000000)+coord.y) // 13172087230812
+		u.Out(coord, (coord.x*4000000)+coord.y) // 13172087230812
 		break search
 	}
 }

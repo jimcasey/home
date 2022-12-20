@@ -1,11 +1,11 @@
 package day20
 
 import (
-	"jimcasey/aoc/utils"
+	u "jimcasey/aoc/utils"
 )
 
 func init() {
-	utils.Register(20, part1, part2)
+	u.Register(20, part1, part2)
 }
 
 func wrap(pos int, length int) int {
@@ -18,8 +18,8 @@ func wrap(pos int, length int) int {
 func run(iterations int, key int) {
 	input := []*int{}
 	var zero *int
-	for _, line := range utils.Read() {
-		num := utils.ToInt(line) * key
+	for _, line := range u.Read() {
+		num := u.ToInt(line) * key
 		input = append(input, &num)
 		if num == 0 {
 			zero = &num
@@ -74,7 +74,7 @@ func run(iterations int, key int) {
 			sum += *num
 		}
 	}
-	utils.Out(sum)
+	u.Out(sum)
 }
 
 func part1() {

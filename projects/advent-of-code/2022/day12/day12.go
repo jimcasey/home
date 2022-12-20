@@ -1,12 +1,12 @@
 package day12
 
 import (
-	"jimcasey/aoc/utils"
+	u "jimcasey/aoc/utils"
 	"math"
 )
 
 func init() {
-	utils.Register(12, part1, part2)
+	u.Register(12, part1, part2)
 }
 
 type Terrain = map[Coord]rune
@@ -30,7 +30,7 @@ var steps Steps
 
 func setTerrain() {
 	terrain = make(Terrain)
-	for y, line := range utils.Read() {
+	for y, line := range u.Read() {
 		for x, elevation := range line {
 			coord := Coord{x, y}
 			switch elevation {
@@ -105,7 +105,7 @@ func part1() {
 	steps = Steps{start: 0}
 	setSteps(start, 1, compare, done)
 
-	utils.Out(steps[end])
+	u.Out(steps[end])
 }
 
 func part2() {
@@ -124,9 +124,9 @@ func part2() {
 	for coord, elevation := range terrain {
 		s, exists := steps[coord]
 		if exists && elevation == 'a' {
-			minSteps = utils.Min(minSteps, s)
+			minSteps = u.Min(minSteps, s)
 		}
 	}
 
-	utils.Out(minSteps)
+	u.Out(minSteps)
 }

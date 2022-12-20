@@ -1,14 +1,14 @@
 package day11
 
 import (
-	"jimcasey/aoc/utils"
+	u "jimcasey/aoc/utils"
 	"regexp"
 	"sort"
 	"strings"
 )
 
 func init() {
-	utils.Register(11, part1, part2)
+	u.Register(11, part1, part2)
 }
 
 type Monkey struct {
@@ -25,13 +25,13 @@ func run(worryDivider int, rounds int) {
 	re, _ := regexp.Compile("[0-9]+")
 
 	monkeys := make(map[int]Monkey)
-	lines := utils.Read()
+	lines := u.Read()
 	for i := 0; i < len(lines); i += 7 {
-		monkey := utils.ToInt(re.FindStringSubmatch(lines[i])[0])
+		monkey := u.ToInt(re.FindStringSubmatch(lines[i])[0])
 
 		var items []int
 		for _, item := range re.FindAllString(lines[i+1], -1) {
-			items = append(items, utils.ToInt(item))
+			items = append(items, u.ToInt(item))
 		}
 
 		operationLine := lines[i+2]
@@ -41,7 +41,7 @@ func run(worryDivider int, rounds int) {
 			operation = "square"
 		} else {
 
-			value = utils.ToInt(re.FindStringSubmatch(operationLine)[0])
+			value = u.ToInt(re.FindStringSubmatch(operationLine)[0])
 			if strings.Contains(operationLine, "*") {
 				operation = "multiply"
 			} else if strings.Contains(operationLine, "+") {
@@ -49,9 +49,9 @@ func run(worryDivider int, rounds int) {
 			}
 		}
 
-		divisible := utils.ToInt(re.FindStringSubmatch(lines[i+3])[0])
-		ifTrue := utils.ToInt(re.FindStringSubmatch(lines[i+4])[0])
-		ifFalse := utils.ToInt(re.FindStringSubmatch(lines[i+5])[0])
+		divisible := u.ToInt(re.FindStringSubmatch(lines[i+3])[0])
+		ifTrue := u.ToInt(re.FindStringSubmatch(lines[i+4])[0])
+		ifFalse := u.ToInt(re.FindStringSubmatch(lines[i+5])[0])
 
 		monkeys[monkey] = Monkey{
 			items,
@@ -110,7 +110,7 @@ func run(worryDivider int, rounds int) {
 	sort.Ints(inspections)
 
 	monkeyBusiness := inspections[len(inspections)-1] * inspections[len(inspections)-2]
-	utils.Out(monkeyBusiness)
+	u.Out(monkeyBusiness)
 }
 
 func part1() {

@@ -1,20 +1,20 @@
 package day01
 
 import (
-	"jimcasey/aoc/utils"
+	u "jimcasey/aoc/utils"
 	"math"
 	"sort"
 	"strconv"
 )
 
 func init() {
-	utils.Register(1, part1, part2)
+	u.Register(1, part1, part2)
 }
 
 func part1() {
 	var maxCalories float64 = 0
 	var currentCalories float64 = 0
-	for _, line := range utils.Read() {
+	for _, line := range u.Read() {
 		if line == "" {
 			currentCalories = 0
 		} else {
@@ -24,13 +24,13 @@ func part1() {
 		maxCalories = math.Max(maxCalories, currentCalories)
 	}
 
-	utils.Out(maxCalories)
+	u.Out(maxCalories)
 }
 
 func part2() {
 	elves := make([]int, 1)
 
-	for _, line := range utils.Read() {
+	for _, line := range u.Read() {
 		if line == "" {
 			elves = append(elves, 0)
 		} else {
@@ -45,5 +45,5 @@ func part2() {
 		sum += calories
 	}
 
-	utils.Out(sum)
+	u.Out(sum)
 }
