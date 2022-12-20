@@ -1,13 +1,13 @@
 package day05
 
 import (
-	"jimcasey/aoc/utils"
+	u "jimcasey/aoc/utils"
 	"strconv"
 	"strings"
 )
 
 func init() {
-	utils.Register(5, part1, part2)
+	u.Register(5, part1, part2)
 }
 
 type StackMap = map[int][]string
@@ -17,7 +17,7 @@ func parseInput() (StackMap, []Move) {
 	stacks := make(StackMap)
 	var moves []Move
 
-	for _, line := range utils.Read() {
+	for _, line := range u.Read() {
 		if strings.Contains(line, "[") {
 			stack := 0
 			for i := 1; i < len(line); i += 4 {
@@ -71,7 +71,7 @@ func part1() {
 		}
 	}
 
-	utils.Out(getTopCrates(stacks))
+	u.Out(getTopCrates(stacks))
 }
 
 func part2() {
@@ -89,5 +89,5 @@ func part2() {
 		stacks[from] = stacks[from][count:]
 	}
 
-	utils.Out(getTopCrates(stacks))
+	u.Out(getTopCrates(stacks))
 }

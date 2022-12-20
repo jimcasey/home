@@ -1,14 +1,13 @@
 package day18
 
 import (
-	"jimcasey/aoc/queue"
-	"jimcasey/aoc/set"
-	"jimcasey/aoc/utils"
+	c "jimcasey/aoc/collections"
+	u "jimcasey/aoc/utils"
 	"strings"
 )
 
 func init() {
-	utils.Register(18, part1, part2)
+	u.Register(18, part1, part2)
 }
 
 type Point struct{ x, y, z int }
@@ -30,27 +29,27 @@ func (p *Point) inside(start Point, end Point) bool {
 		start.z <= p.z && p.z <= end.z
 }
 
-func parseInput() (set.Set[Point], Point) {
+func parseInput() (c.Set[Point], Point) {
 	max := Point{0, 0, 0}
-	cubes := make(set.Set[Point])
-	for _, line := range utils.Read() {
+	cubes := make(c.Set[Point])
+	for _, line := range u.Read() {
 		split := strings.Split(line, ",")
 		cube := Point{
-			utils.ToInt(split[0]),
-			utils.ToInt(split[1]),
-			utils.ToInt(split[2]),
+			u.ToInt(split[0]),
+			u.ToInt(split[1]),
+			u.ToInt(split[2]),
 		}
 		cubes[cube] = struct{}{}
 		max = Point{
-			utils.Max(max.x, cube.x),
-			utils.Max(max.y, cube.y),
-			utils.Max(max.z, cube.z),
+			u.Max(max.x, cube.x),
+			u.Max(max.y, cube.y),
+			u.Max(max.z, cube.z),
 		}
 	}
 	return cubes, max
 }
 
-func calculateSides(cubes set.Set[Point]) int {
+func calculateSides(cubes c.Set[Point]) int {
 	sides := 0
 	for cube := range cubes {
 		for _, adjacent := range cube.adjacent() {
@@ -64,16 +63,16 @@ func calculateSides(cubes set.Set[Point]) int {
 
 func part1() {
 	cubes, _ := parseInput()
-	utils.Out(calculateSides(cubes))
+	u.Out(calculateSides(cubes))
 }
 
 func part2() {
 	cubes, end := parseInput()
 	start := Point{0, 0, 0}
 
-	q := queue.NewQueue[Point]()
+	q := c.NewQueue[Point]()
 	q.Add(start)
-	seen := set.NewSet[Point]()
+	seen := c.NewSet[Point]()
 	for q.Length() > 0 {
 		point := q.Pop()
 		if point.inside(start, end) && !cubes.Has(point) {
@@ -86,7 +85,7 @@ func part2() {
 		}
 	}
 
-	total := set.NewSet[Point]()
+	total := c.NewSet[Point]()
 	for z := 0; z <= end.z; z++ {
 		for y := 0; y <= end.y; y++ {
 			for x := 0; x <= end.x; x++ {
@@ -98,5 +97,5 @@ func part2() {
 		}
 	}
 
-	utils.Out(calculateSides(total))
+	u.Out(calculateSides(total))
 }

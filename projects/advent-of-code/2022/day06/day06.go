@@ -1,11 +1,11 @@
 package day06
 
 import (
-	"jimcasey/aoc/utils"
+	u "jimcasey/aoc/utils"
 )
 
 func init() {
-	utils.Register(6, part1, part2)
+	u.Register(6, part1, part2)
 }
 
 func findPosition(markerOffset int, message string) int {
@@ -29,13 +29,13 @@ func findPosition(markerOffset int, message string) int {
 }
 
 func part1() {
-	for _, line := range utils.Read() {
-		utils.Out(findPosition(4, line))
+	for _, line := range u.Read() {
+		u.Out(findPosition(4, line))
 	}
 }
 
 func part2() {
-	for _, line := range utils.Read() {
-		utils.Out(findPosition(14, line))
+	for _, line := range u.Read() {
+		u.Out(findPosition(14, line))
 	}
 }

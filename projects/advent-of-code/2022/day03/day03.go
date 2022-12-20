@@ -1,19 +1,19 @@
 package day03
 
 import (
-	"jimcasey/aoc/utils"
+	u "jimcasey/aoc/utils"
 	"strings"
 )
 
 func init() {
-	utils.Register(3, part1, part2)
+	u.Register(3, part1, part2)
 }
 
 const priorities = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
 
 func part1() {
 	var sum int
-	for _, line := range utils.Read() {
+	for _, line := range u.Read() {
 		length := len(line) / 2
 		compartment1 := line[0:length]
 		compartment2 := line[length:]
@@ -34,12 +34,12 @@ func part1() {
 		sum += strings.Index(priorities, string(match)) + 1
 	}
 
-	utils.Out(sum)
+	u.Out(sum)
 }
 
 func part2() {
 	var lines []string
-	lines = append(lines, utils.Read()...)
+	lines = append(lines, u.Read()...)
 
 	var sum int
 	for group := 0; group < len(lines); group += 3 {
@@ -64,5 +64,5 @@ func part2() {
 		}
 		sum += strings.Index(priorities, string(match)) + 1
 	}
-	utils.Out(sum)
+	u.Out(sum)
 }

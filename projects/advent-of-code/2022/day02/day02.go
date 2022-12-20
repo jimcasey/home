@@ -1,12 +1,12 @@
 package day02
 
 import (
-	"jimcasey/aoc/utils"
+	u "jimcasey/aoc/utils"
 	"strings"
 )
 
 func init() {
-	utils.Register(2, part1, part2)
+	u.Register(2, part1, part2)
 }
 
 func part1() {
@@ -15,7 +15,7 @@ func part1() {
 	outcomeMap := map[int]int{0: 3, 1: 6, 2: 0}
 
 	score := 0
-	for _, line := range utils.Read() {
+	for _, line := range u.Read() {
 		guide := strings.Split(line, " ")
 		theirs := theirsMap[guide[0]]
 		mine := mineMap[guide[1]]
@@ -23,7 +23,7 @@ func part1() {
 		score += mine + outcome
 	}
 
-	utils.Out(score)
+	u.Out(score)
 }
 
 func part2() {
@@ -32,12 +32,12 @@ func part2() {
 	offsetMap := map[string]int{"X": -1, "Y": 0, "Z": 1}
 
 	score := 0
-	for _, line := range utils.Read() {
+	for _, line := range u.Read() {
 		guide := strings.Split(line, " ")
 		theirs := theirsMap[guide[0]]
 		mine := ((theirs + 2 + offsetMap[guide[1]]) % 3) + 1
 		score += mine + outcomeMap[guide[1]]
 	}
 
-	utils.Out(score)
+	u.Out(score)
 }

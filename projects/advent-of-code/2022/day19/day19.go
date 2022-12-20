@@ -1,12 +1,12 @@
 package day19
 
 import (
-	"jimcasey/aoc/utils"
+	u "jimcasey/aoc/utils"
 	"regexp"
 )
 
 func init() {
-	utils.Register(19, part1, part2)
+	u.Register(19, part1, part2)
 }
 
 type Blueprint struct {
@@ -34,14 +34,14 @@ func NewState(minutes int) State {
 func parseInput() []Blueprint {
 	var blueprints []Blueprint
 	re := regexp.MustCompile(`-?\d+`)
-	for _, line := range utils.Read() {
+	for _, line := range u.Read() {
 		matches := re.FindAllString(line, -1)
 		blueprints = append(blueprints, Blueprint{
-			utils.ToInt(matches[0]),
-			struct{ ore int }{utils.ToInt(matches[1])},
-			struct{ ore int }{utils.ToInt(matches[2])},
-			struct{ ore, clay int }{utils.ToInt(matches[3]), utils.ToInt(matches[4])},
-			struct{ ore, obsidian int }{utils.ToInt(matches[5]), utils.ToInt(matches[6])},
+			u.ToInt(matches[0]),
+			struct{ ore int }{u.ToInt(matches[1])},
+			struct{ ore int }{u.ToInt(matches[2])},
+			struct{ ore, clay int }{u.ToInt(matches[3]), u.ToInt(matches[4])},
+			struct{ ore, obsidian int }{u.ToInt(matches[5]), u.ToInt(matches[6])},
 		})
 	}
 	return blueprints
@@ -55,7 +55,7 @@ func find(blueprint Blueprint, minutes int, robotType string, resources Resource
 		resources.clay += robots.clay
 		resources.obsidian += robots.obsidian
 		resources.geode += robots.geode
-		max.geodeCount = utils.Max(max.geodeCount, resources.geode)
+		max.geodeCount = u.Max(max.geodeCount, resources.geode)
 		minutes--
 	}
 
@@ -128,7 +128,7 @@ func part1() {
 		find(blueprint, 24, "", Resources{0, 0, 0, 0}, Robots{1, 0, 0, 0}, &max)
 		qualityLevel += blueprint.id * max.geodeCount
 	}
-	utils.Out(qualityLevel)
+	u.Out(qualityLevel)
 }
 
 func part2() {
@@ -141,5 +141,5 @@ func part2() {
 		find(blueprint, 32, "", Resources{0, 0, 0, 0}, Robots{1, 0, 0, 0}, &max)
 		multiple *= max.geodeCount
 	}
-	utils.Out(multiple)
+	u.Out(multiple)
 }

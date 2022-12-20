@@ -1,14 +1,14 @@
 package day07
 
 import (
-	"jimcasey/aoc/utils"
+	u "jimcasey/aoc/utils"
 	"math"
 	"strconv"
 	"strings"
 )
 
 func init() {
-	utils.Register(7, part1, part2)
+	u.Register(7, part1, part2)
 }
 
 func getParent(path string) string {
@@ -19,7 +19,7 @@ func getParent(path string) string {
 func parseInput() map[string]int {
 	sizeMap := make(map[string]int)
 	var path string
-	for _, line := range utils.Read() {
+	for _, line := range u.Read() {
 		if line == "$ ls" || strings.HasPrefix(line, "dir ") {
 			continue
 		}
@@ -55,7 +55,7 @@ func part1() {
 			cullSize += size
 		}
 	}
-	utils.Out(cullSize)
+	u.Out(cullSize)
 }
 
 func part2() {
@@ -69,5 +69,5 @@ func part2() {
 			cullSpace = int(math.Min(float64(cullSpace), float64(size)))
 		}
 	}
-	utils.Out(cullSpace)
+	u.Out(cullSpace)
 }

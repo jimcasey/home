@@ -1,12 +1,12 @@
 package day13
 
 import (
-	"jimcasey/aoc/utils"
+	u "jimcasey/aoc/utils"
 	"sort"
 )
 
 func init() {
-	utils.Register(13, part1, part2)
+	u.Register(13, part1, part2)
 }
 
 func parse(item string) []string {
@@ -37,7 +37,7 @@ func evaluate(leftStr string, rightStr string) int {
 	left := parse(leftStr)
 	right := parse(rightStr)
 
-	for i := 0; i < utils.Max(len(left), len(right)); i++ {
+	for i := 0; i < u.Max(len(left), len(right)); i++ {
 		if i >= len(left) {
 			return 1
 		}
@@ -70,8 +70,8 @@ func evaluate(leftStr string, rightStr string) int {
 			}
 		}
 
-		leftInt := utils.ToInt(leftItem)
-		rightInt := utils.ToInt(rightItem)
+		leftInt := u.ToInt(leftItem)
+		rightInt := u.ToInt(rightItem)
 
 		if leftInt < rightInt {
 			return 1
@@ -86,7 +86,7 @@ func evaluate(leftStr string, rightStr string) int {
 }
 
 func part1() {
-	lines := utils.Read()
+	lines := u.Read()
 
 	index := 1
 	sum := 0
@@ -96,12 +96,12 @@ func part1() {
 		}
 		index++
 	}
-	utils.Out(sum)
+	u.Out(sum)
 }
 
 func part2() {
 	packets := []string{"[[2]]", "[[6]]"}
-	for _, line := range utils.Read() {
+	for _, line := range u.Read() {
 		if line == "" {
 			continue
 		}
@@ -125,5 +125,5 @@ func part2() {
 		}
 		index++
 	}
-	utils.Out(decoderKey)
+	u.Out(decoderKey)
 }

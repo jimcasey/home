@@ -2,17 +2,17 @@ package day10
 
 import (
 	"fmt"
-	"jimcasey/aoc/utils"
+	u "jimcasey/aoc/utils"
 	"strconv"
 	"strings"
 )
 
 func init() {
-	utils.Register(10, part1, part2)
+	u.Register(10, part1, part2)
 }
 
 func parseInput() []int {
-	instructions := utils.Read()
+	instructions := u.Read()
 	values := []int{1}
 	var addCache *int
 
@@ -41,7 +41,7 @@ func part1() {
 			signalStrength += pos * cycle
 		}
 	}
-	utils.Out(signalStrength)
+	u.Out(signalStrength)
 }
 
 func part2() {
