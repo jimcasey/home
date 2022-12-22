@@ -8,7 +8,11 @@ func NewStack[T any](items ...T) Stack[T] {
 	return stack
 }
 func (stack *Stack[T]) Add(items ...T) {
-	*stack = append(*stack, items...)
+	temp := *stack
+	for _, item := range items {
+		temp = append([]T{item}, temp...)
+	}
+	*stack = temp
 }
 func (stack *Stack[T]) Pop() T {
 	temp := *stack
