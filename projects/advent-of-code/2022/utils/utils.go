@@ -12,10 +12,10 @@ import (
 var registry map[int][]func()
 var selectedDay *int
 var selectedPart *int
-var isTest *bool
+var IsTest *bool
 
 func init() {
-	isTest = flag.Bool("test", false, "Run test input")
+	IsTest = flag.Bool("test", false, "Run test input")
 	selectedDay = flag.Int("day", -1, "Day (defaults to latest)")
 	selectedPart = flag.Int("part", -1, "Part (defaults to latest)")
 	flag.Parse()
@@ -45,7 +45,7 @@ func Run() {
 func Read() []string {
 	var packageName = "day" + fmt.Sprintf("%02d", *selectedDay)
 	var inputName string
-	if *isTest {
+	if *IsTest {
 		inputName = "test.txt"
 	} else {
 		inputName = "input.txt"
