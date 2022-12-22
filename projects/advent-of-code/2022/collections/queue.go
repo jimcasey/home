@@ -8,11 +8,7 @@ func NewQueue[T any](items ...T) Queue[T] {
 	return queue
 }
 func (queue *Queue[T]) Add(items ...T) {
-	temp := *queue
-	for _, item := range items {
-		temp = append([]T{item}, temp...)
-	}
-	*queue = temp
+	*queue = append(*queue, items...)
 }
 func (queue *Queue[T]) Pop() T {
 	temp := *queue
