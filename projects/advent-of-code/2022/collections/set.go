@@ -28,3 +28,10 @@ func (set Set[T]) Pop() T {
 	delete(set, item)
 	return item
 }
+func (set Set[T]) Copy() Set[T] {
+	copy := make(Set[T])
+	for item := range set {
+		copy.Add(item)
+	}
+	return copy
+}
