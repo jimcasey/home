@@ -5,6 +5,7 @@ script_dir="$(cd "$(dirname ${BASH_SOURCE[0]-$0})" && pwd)"
 # system
 alias ls='ls -1'
 alias ll='ls -lG'
+alias bat='bat --paging=never'
 alias reprofile='source ~/.zshrc'
 alias copypk='cat $(ls ~/.ssh/*.pub | head -1) | pbcopy'
 alias pbjson='pbpaste | python -m json.tool | bat -l json'
@@ -13,7 +14,7 @@ alias restartcal='launchctl stop com.apple.CalendarAgent && launchctl start com.
 
 # Git
 alias gamd='git commit -a --amend'
-alias gbra='git rev-parse --abbrev-ref HEAD | pbcopy'
+alias gbra='git rev-parse --abbrev-ref HEAD'
 alias gdel="$script_dir/scripts/gdel.sh"
 alias gdif='git diff'
 alias glas='git checkout -'
@@ -30,7 +31,7 @@ alias gpus="$script_dir/scripts/gpus.sh"
 alias greb='git checkout $(gmasb) && git pull && git checkout - && git rebase -i $(gmasb)'
 alias grebc='git add . && git rebase --continue'
 alias gren='git branch -m'
-alias gres='git checkout $(gmasb) && git fetch origin && git reset --hard origin/$(gmasb)'
+alias gres='git reset --hard origin/$(gbra)'
 alias gsta='git status'
 
 # Docker
