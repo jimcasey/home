@@ -1,7 +1,6 @@
 // Place your settings in this file to overwrite the default settings
 {
   "editor.autoClosingBrackets": "never",
-  "editor.autoIndent": "none",
   "editor.detectIndentation": false,
   "editor.dragAndDrop": false,
   "editor.folding": false,
@@ -87,7 +86,13 @@
   "workbench.fontAliasing": "auto",
   "terminal.integrated.scrollback": 10000,
   "terminal.integrated.defaultProfile.osx": "zsh",
-  "workbench.colorTheme": "Default Light+",
   "snyk.yesWelcomeNotification": false,
-  "git.mergeEditor": true
+  "git.mergeEditor": true,
+  "workbench.colorTheme": "Default Light+",
+  "[python]": {
+    "editor.formatOnType": true
+  },
+  "[css]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  }
 }
