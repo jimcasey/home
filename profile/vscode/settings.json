@@ -56,7 +56,6 @@
   "[html]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
-  "editor.codeLens": false,
   "diffEditor.ignoreTrimWhitespace": false,
   "editor.renderControlCharacters": false,
   "security.workspace.trust.untrustedFiles": "open",
@@ -88,10 +87,15 @@
   "terminal.integrated.defaultProfile.osx": "zsh",
   "snyk.yesWelcomeNotification": false,
   "git.mergeEditor": true,
+  "go.lintOnSave": "file",
+  "go.toolsManagement.autoUpdate": true,
+  "editor.inlineSuggest.enabled": true,
   "workbench.colorTheme": "Default Light+",
   "[python]": {
     "editor.formatOnType": true
   },
+  "npm.scriptHover": false,
+  "debug.javascript.codelens.npmScripts": "never",
   "[css]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   }
