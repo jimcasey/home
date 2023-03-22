@@ -6,7 +6,11 @@ echo_action() {
 }
 
 append() {
-  if ! grep -qs "\"$1\"" "$2"; then
+  dir=$(dirname "$2")
+  if [[ ! -d $dir ]]; then
+    mkdir -p $dir
+  fi
+  if ! grep -qs -- "$1" "$2"; then
     echo "$1" >> "$2"
   fi
 }
@@ -22,22 +26,7 @@ if [[ ! -d $ohmyzsh_path ]]; then
   echo_action "Installing Oh My Zsh..."
   sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 fi
-
-zshrc_local=~/.zshrc
-zshrc_command="source ${script_dir}/.zshrc"
-
-if ! grep -qs "$zshrc_command" $zshrc_local; then
-  echo_action "Configuring ${zshrc_local}..."
-  touch $zshrc_local
-  append $zshrc_local $zshrc_command
-fi
-
-zshrc_backup=~/.zshrc.pre-oh-my-zsh
-if [[ -f $zshrc_backup ]]; then
-  echo_action "Restoring ${zshrc_local}..."
-  rm $zshrc_local
-  mv $zshrc_backup $zshrc_local
-fi
+append "source ${script_dir}/.zshrc" ~/.zshrc
 
 echo_action "Configuring git..."
 git config --global core.editor "vi"
@@ -52,17 +41,9 @@ if [[ ! -d ~/.vim/pack/themes/start/vim-code-dark ]]; then
   cd ~/.vim/pack/themes/start
   git clone https://github.com/tomasiser/vim-code-dark
 fi
-
-touch ~/.vimrc
-append "syntax enable" ~/.vimrc
-append "colorscheme codedark" ~/.vimrc
+append "source ${script_dir}/.vimrc" ~/.vimrc
 
 echo_action "Configuring bat..."
-if [[ ! -d ~/.config/bat ]]; then
-  mkdir -p ~/.config/bat
-fi
-
-touch ~/.config/bat/config
-append '--theme="Visual Studio Dark+"' ~/.config/bat/config
+append "--theme='Visual Studio Dark+'" ~/.config/bat/config
 
 echo "Done."
