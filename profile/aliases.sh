@@ -11,6 +11,7 @@ alias copypk='cat $(ls ~/.ssh/*.pub | head -1) | pbcopy'
 alias pbjson='pbpaste | python -m json.tool | bat -l json'
 alias boop='osascript -e "display notification \"Command finished executing 👍\" with title \"Terminal\" sound name \"Submarine\""'
 alias restartcal='launchctl stop com.apple.CalendarAgent && launchctl start com.apple.CalendarAgent'
+alias ssht='function _ssht(){ ssh "$1" "echo Touched\!"; };_ssht'
 
 # Git
 alias gamd='git commit -a --amend'
