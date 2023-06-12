@@ -14,12 +14,14 @@ alias restartcal='launchctl stop com.apple.CalendarAgent && launchctl start com.
 alias ssht='function _ssht(){ ssh "$1" "echo Touched\!"; };_ssht'
 
 # Git
+alias gc='git checkout'
 alias gamd='git commit -a --amend'
 alias gbra='git rev-parse --abbrev-ref HEAD'
 alias gdel="$script_dir/scripts/gdel.sh"
 alias gdif='git diff'
 alias glas='git checkout -'
 alias glog='git log --pretty=oneline --abbrev-commit -10'
+alias gm='git checkout $(gmasb)'
 alias gmas='git checkout $(gmasb)'
 alias gmasb='git show-ref --verify --quiet refs/heads/main && echo main || echo master'
 alias gmasp='git checkout $(gmasb) && git pull'
