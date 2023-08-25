@@ -14,9 +14,9 @@ alias restartcal='launchctl stop com.apple.CalendarAgent && launchctl start com.
 alias ssht='function _ssht(){ ssh "$1" "echo Touched\!"; };_ssht'
 
 # Git
-alias gc='git checkout'
 alias gamd='git commit -a --amend'
 alias gbra='git rev-parse --abbrev-ref HEAD'
+alias gc='git checkout'
 alias gdel="$script_dir/scripts/gdel.sh"
 alias gdif='git diff'
 alias glas='git checkout -'
@@ -35,6 +35,7 @@ alias greb='git checkout $(gmasb) && git pull && git checkout - && git rebase -i
 alias grebc='git add . && git rebase --continue'
 alias gren='git branch -m'
 alias gres='git reset --hard origin/$(gbra)'
+alias grmi="for f in $(git ls-files --ignored --others --exclude-standard --directory); do rm -rf $f; done"
 alias gsta='git status'
 
 # Docker
