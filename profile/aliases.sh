@@ -2,7 +2,7 @@
 
 script_dir="$(cd "$(dirname ${BASH_SOURCE[0]-$0})" && pwd)"
 
-# system
+# tools
 alias ls='ls -1'
 alias ll='ls -lGA'
 alias bat='bat --paging=never'
@@ -12,6 +12,7 @@ alias pbjson='pbpaste | python -m json.tool | bat -l json'
 alias boop='osascript -e "display notification \"Command finished executing 👍\" with title \"Terminal\" sound name \"Submarine\""'
 alias restartcal='launchctl stop com.apple.CalendarAgent && launchctl start com.apple.CalendarAgent'
 alias ssht='function _ssht(){ ssh "$1" "echo Touched\!"; };_ssht'
+alias uuid='uuidgen | tr "[:upper:]" "[:lower:]" | pbcopy'
 
 # Git
 alias gamd='git commit -a --amend'
