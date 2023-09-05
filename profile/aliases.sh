@@ -35,7 +35,7 @@ alias greb='git checkout $(gmasb) && git pull && git checkout - && git rebase -i
 alias grebc='git add . && git rebase --continue'
 alias gren='git branch -m'
 alias gres='git reset --hard origin/$(gbra)'
-alias grmi="for f in $(git ls-files --ignored --others --exclude-standard --directory); do rm -rf $f; done"
+alias grmi='for f in $(git ls-files --ignored --others --exclude-standard --directory); do rm -rf $f; done'
 alias gsta='git status'
 
 # Docker
