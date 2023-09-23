@@ -38,6 +38,7 @@ alias grebc='git add . && git rebase --continue'
 alias gren='git branch -m'
 alias gres='git reset --hard origin/$(gbra)'
 alias grmi='for f in $(git ls-files --ignored --others --exclude-standard --directory); do rm -rf $f; done'
+alias grun='git reset head^'
 alias gsta='git status'
 
 # Docker
