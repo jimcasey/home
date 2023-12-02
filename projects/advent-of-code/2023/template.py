@@ -5,12 +5,12 @@ inputPath = scriptPath + '/test.txt'
 
 
 def main():
-    pass
+  pass
 
 
 def readInput():
-    with open(inputPath) as file:
-        return file.read().splitlines()
+  with open(inputPath) as file:
+    return file.read().splitlines()
 
 
 main()
