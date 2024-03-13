@@ -8,7 +8,7 @@ alias ll='ls -lGA'
 alias bat='bat --paging=never'
 alias reprofile='source ~/.zshrc'
 alias copypk='cat $(ls ~/.ssh/*.pub | head -1) | pbcopy'
-alias pbjson='pbpaste | python -m json.tool | bat -l json'
+alias pbjson='pbpaste | python3 -m json.tool | bat -l json'
 alias boop='osascript -e "display notification \"Command finished executing 👍\" with title \"Terminal\" sound name \"Submarine\""'
 alias restartcal='launchctl stop com.apple.CalendarAgent && launchctl start com.apple.CalendarAgent'
 alias ssht='function _ssht(){ ssh "$1" "echo Touched\!"; };_ssht'
@@ -54,7 +54,7 @@ alias denode='$(TMP=$(mktemp -d) && mv -f node_modules $TMP && rm -rf $TMP) &> /
 alias npy='npx --yes'
 
 # Python
-alias py='python'
+alias py='python3'
 
 # VSCode
 alias codea='code --add'
