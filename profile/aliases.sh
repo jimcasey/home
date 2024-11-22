@@ -61,3 +61,4 @@ alias codew='code --reuse-window'
 
 # Copilot
 alias suggest='ghcs'
+alias explain='ghce'
