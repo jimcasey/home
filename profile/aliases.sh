@@ -13,7 +13,6 @@ alias boop='osascript -e "display notification \"Command finished executing 👍
 alias restartcal='launchctl stop com.apple.CalendarAgent && launchctl start com.apple.CalendarAgent'
 alias ssht='function _ssht(){ ssh "$1" "echo Touched\!"; };_ssht'
 alias uuid='uuidgen | tr "[:upper:]" "[:lower:]" | pbcopy'
-alias uuid10='for i in {1..10}; do uuidgen | tr "[:upper:]" "[:lower:]"; done | pbcopy'
 
 # Git
 alias gamd='git commit -a --amend'
@@ -59,3 +58,6 @@ alias py='python3'
 # VSCode
 alias codea='code --add'
 alias codew='code --reuse-window'
+
+# Copilot
+alias suggest='gh copilot suggest'
