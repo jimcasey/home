@@ -60,4 +60,4 @@ alias codea='code --add'
 alias codew='code --reuse-window'
 
 # Copilot
-alias suggest='gh copilot suggest'
+alias suggest='ghcs'
