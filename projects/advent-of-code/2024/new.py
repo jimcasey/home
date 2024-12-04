@@ -24,6 +24,7 @@ if len(sys.argv) <= 1:
 
 scriptPath = os.path.dirname(os.path.abspath(__file__))
 folderPath = f'{scriptPath}/{sys.argv[1]}'
+editor = sys.argv[2] if len(sys.argv) > 2 else 'code'
 
 if os.path.isdir(folderPath):
   printc.war('Folder already exists.')
@@ -42,8 +43,8 @@ copyfile(templatePath, part1Path)
 open(testPath, 'a').close()
 open(inputPath, 'a').close()
 
-os.system(f'code {part1Path}')
-os.system(f'code {testPath}')
-os.system(f'code {inputPath}')
+os.system(f'{editor} {part1Path}')
+os.system(f'{editor} {testPath}')
+os.system(f'{editor} {inputPath}')
 
 print('Done!')
