@@ -6,7 +6,7 @@ script_dir="$(cd "$(dirname ${BASH_SOURCE[0]-$0})" && pwd)"
 alias ls='ls -1'
 alias ll='ls -lGA'
 alias bat='bat --paging=never'
-alias reprofile='source ~/.zshrc'
+alias reprofile='exec zsh'
 alias copypk='cat $(ls ~/.ssh/*.pub | head -1) | pbcopy'
 alias pbjson='pbpaste | python3 -m json.tool | bat -l json'
 alias boop='osascript -e "display notification \"Command finished executing 👍\" with title \"Terminal\" sound name \"Submarine\""'
