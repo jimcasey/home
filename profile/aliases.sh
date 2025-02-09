@@ -51,7 +51,7 @@ alias drmi='docker rmi $(docker images -q)'
 # Node
 alias denode='$(TMP=$(mktemp -d) && mv -f node_modules $TMP && rm -rf $TMP) &> /dev/null &'
 alias npy='npx --yes'
-alias nv="echo '\033[1;36mSwitching to configured Node version...\033[0m' && n auto || echo '\033[1;36mSwitching to LTS Node version...\033[0m' && n lts"
+alias nv="(echo '\033[1;36mSwitching to configured Node version...\033[0m' && n auto) || (echo '\033[1;36mSwitching to LTS Node version...\033[0m' && n lts)"
 
 # Python
 alias py='python3'
