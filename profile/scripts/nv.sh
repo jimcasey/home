@@ -38,15 +38,17 @@ echo_version 'current' $current_version
 echo_version 'auto' ${auto_version:-n/a}
 echo_version 'lts' $lts_version
 
-if [[ "$auto_version" == "$current_version" || "$lts_version" == "$current_version" ]]; then
+if [[ -z "$auto_version" && "$lts_version" == "$current_version" ]]; then
+  exit 0
+elif [[ "$auto_version" == "$current_version" ]]; then
   exit 0
 fi
 
 echo
 if [ -n "$auto_version" ]; then
-  echo_bright 'Switching to configured Node version...'
+  echo_bright 'Switching to configured version...'
   n auto
 else
-  echo_bright 'Switching to the LTS Node version...'
+  echo_bright 'Switching to the LTS version...'
   n lts
 fi
