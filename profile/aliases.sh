@@ -25,7 +25,7 @@ alias glog='git log --pretty=oneline --abbrev-commit -10'
 alias glogs='for k in $(git branch | perl -pe s/^..//); do echo -e $(git show --pretty=format:"%ci\t%cr" $k -- | head -n 1)\\t$k; done | sort'
 alias gm='git checkout $(gmasb)'
 alias gmas='git checkout $(gmasb)'
-alias gmasb='git show-ref --verify --quiet refs/heads/main && echo develop || echo main || echo master'
+alias gmasb="git remote show origin | awk -F': ' '/HEAD branch/ {print \$2}' | xargs"
 alias gmasp='git checkout $(gmasb) && git pull'
 alias gmer='git checkout $(gmasb) && git pull && git checkout - && git merge $(gmasb)'
 alias gmerc='git add . && git commit'
