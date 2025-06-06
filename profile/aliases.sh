@@ -60,6 +60,10 @@ alias py='python3'
 alias codea='code --add'
 alias codew='code --reuse-window'
 
+# Cursor
+alias cursora='cursor --add'
+alias cursorw='cursor --reuse-window'
+
 # Copilot
 alias suggest='ghcs'
 alias explain='ghce'
