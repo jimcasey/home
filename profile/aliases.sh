@@ -63,6 +63,7 @@ alias codew='code --reuse-window'
 # Cursor
 alias ca='cursor --add'
 alias cw='cursor --reuse-window'
+alias cagent='cursor-agent'
 
 # Copilot
 alias suggest='ghcs'
