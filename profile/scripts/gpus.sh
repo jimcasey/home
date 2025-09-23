@@ -51,7 +51,7 @@ error="\033[1;31m"
 warning="\033[1;33m"
 normal="\033[0m"
 current_branch="$(git rev-parse --abbrev-ref HEAD)"
-main_branch="$(git show-ref --verify --quiet refs/heads/main && echo main || echo master)"
+main_branch="$(git remote show origin | awk -F': ' '/HEAD branch/ {print $NF}' | xargs)"
 
 if [[ $current_branch == $main_branch ]]; then
   echo_exception "Error: current branch is '${main_branch}'."

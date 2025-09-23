@@ -75,7 +75,7 @@ normal="\033[0m"
 current_branch="$(git rev-parse --abbrev-ref HEAD)"
 delete_all=n
 should_skip=n
-main_branch=$(git show-ref --verify --quiet refs/heads/main && echo develop || echo main || echo master)
+main_branch="$(git remote show origin | awk -F': ' '/HEAD branch/ {print $NF}' | xargs)"
 skip_branches="$main_branch"
 
 for arg; do

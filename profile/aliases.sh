@@ -18,7 +18,6 @@ alias uuid='uuidgen | tr "[:upper:]" "[:lower:]" | pbcopy'
 alias gamd='git commit -a --amend'
 alias gbra='git rev-parse --abbrev-ref HEAD'
 alias gc='git checkout'
-alias gdel="$script_dir/scripts/gdel.sh"
 alias gdif='git diff'
 alias glas='git checkout -'
 alias glog='git log --pretty=oneline --abbrev-commit -10'
@@ -32,7 +31,6 @@ alias gmerc='git add . && git commit'
 alias gmit='git commit -am'
 alias gnew='git checkout -b'
 alias gpul='git pull'
-alias gpus="$script_dir/scripts/gpus.sh"
 alias greb='git checkout $(gmasb) && git pull && git checkout - && git rebase -i $(gmasb)'
 alias grebc='git add . && git rebase --continue'
 alias gren='git branch -m'
@@ -40,6 +38,8 @@ alias gres='git reset --hard origin/$(gbra)'
 alias grmi='for f in $(git ls-files --ignored --others --exclude-standard --directory | grep -v "\.env$"); do rm -rf $f; done'
 alias grun='git reset head^'
 alias gsta='git status'
+alias gdel="$script_dir/scripts/gdel.sh"
+alias gpus="$script_dir/scripts/gpus.sh"
 
 # Docker
 alias dkill='docker kill $(docker ps -q)'
