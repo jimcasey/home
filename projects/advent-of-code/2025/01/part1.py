@@ -18,10 +18,11 @@ def main():
     elif direction == 'L':
       index = (index - value) % 100
 
+    print(f"{index} {line}")  # Debug output
     if index == 0:
       zero_count += 1
 
-  print(zero_count)
+  print(f"\nTotal zero count: {zero_count}")
 
 
 def readInput():
