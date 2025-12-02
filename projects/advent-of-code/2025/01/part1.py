@@ -5,7 +5,10 @@ inputPath = scriptPath + '/test.txt'
 
 
 def main():
-  pass
+  lines = readInput()
+
+  for line in lines:
+    print(line)
 
 
 def readInput():
