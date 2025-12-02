@@ -7,6 +7,7 @@ inputPath = scriptPath + '/test.txt'
 def main():
   lines = readInput()
   index = 0
+  zero_count = 0
 
   for line in lines:
     direction = line[0]
@@ -21,7 +22,10 @@ def main():
       if index < 0:
         index = 99
 
-    print(f"{index} {line}")
+    if index == 0:
+      zero_count += 1
+
+  print(zero_count)
 
 
 def readInput():
