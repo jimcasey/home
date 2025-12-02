@@ -6,9 +6,22 @@ inputPath = scriptPath + '/test.txt'
 
 def main():
   lines = readInput()
+  index = 0
 
   for line in lines:
-    print(line)
+    direction = line[0]
+    value = int(line[1:])
+
+    if direction == 'R':
+      index += value
+      if index > 99:
+        index = 0
+    elif direction == 'L':
+      index -= value
+      if index < 0:
+        index = 99
+
+    print(f"{index} {line}")
 
 
 def readInput():
