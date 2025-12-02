@@ -14,13 +14,9 @@ def main():
     value = int(line[1:])
 
     if direction == 'R':
-      index += value
-      if index > 99:
-        index = 0
+      index = (index + value) % 100
     elif direction == 'L':
-      index -= value
-      if index < 0:
-        index = 99
+      index = (index - value) % 100
 
     if index == 0:
       zero_count += 1
