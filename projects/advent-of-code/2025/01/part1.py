@@ -14,14 +14,15 @@ def main():
     value = int(line[1:])
 
     if direction == 'R':
-      index = (index + value) % 101
+      index = (index + value) % 100
     elif direction == 'L':
-      index = (index - value) % 101
+      index = (index - value) % 100
 
+    print(f"{index} {line}")
     if index == 0:
       zero_count += 1
 
-  print(zero_count)
+  print(f"\nZero count: {zero_count}")
 
 
 def readInput():
