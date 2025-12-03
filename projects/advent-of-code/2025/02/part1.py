@@ -5,12 +5,15 @@ inputPath = scriptPath + '/test.txt'
 
 
 def main():
-  pass
+  line = readInput()
+  items = line.split(',')
+  for item in items:
+    print(item)
 
 
 def readInput():
   with open(inputPath) as file:
-    return file.read().splitlines()
+    return file.read().strip()
 
 
 main()
