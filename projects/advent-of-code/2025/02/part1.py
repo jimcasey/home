@@ -7,13 +7,13 @@ inputPath = scriptPath + '/test.txt'
 def main():
   line = readInput()
   items = line.split(',')
-  count = 0
+  total = 0
   for item in items:
     start, end = item.split('-')
     for num in range(int(start), int(end) + 1):
       if is_mirrored(num):
-        count += 1
-  print(count)
+        total += num
+  print(total)
 
 
 def is_mirrored(num):
