@@ -68,11 +68,34 @@ def readInput():
 main()
 ```
 
-### Common Parsing Pattern
+### Common Parsing Patterns
+
+#### Multi-line with Prefix Pattern
 ```python
 for line in lines:
   direction = line[0]        # First character
   value = int(line[1:])      # Rest as integer
+```
+
+#### Comma-Separated Ranges
+```python
+line = readInput()
+items = line.split(',')
+for item in items:
+  start, end = item.split('-')
+  for num in range(int(start), int(end) + 1):
+    # Process each number
+```
+
+#### String Pattern Matching
+```python
+def has_repeating_pattern(s):
+  for pattern_len in range(1, len(s)):
+    if len(s) % pattern_len == 0:
+      pattern = s[:pattern_len]
+      if pattern * (len(s) // pattern_len) == s:
+        return True
+  return False
 ```
 
 ## Mathematical Constraints & Patterns
@@ -124,6 +147,70 @@ Examples:
 - R25 from 90 → crosses 100, reaches 15 → count +1
 - R125 from 90 → crosses 100 twice → count +2
 
+### Day 02: Range Parsing and Pattern Detection
+
+#### Key Constraints
+- **Input Format**: Comma-separated ranges (e.g., "11-22,95-115,998-1012")
+- **Range Format**: "start-end" where both are inclusive
+- **Goal**: Process all numbers in all ranges
+
+#### Part 1: Half-Mirror Detection
+A number is "mirrored" when split in half, both halves are identical:
+- Examples: 11 (1|1), 123123 (123|123), 1234123412 (12341|23412)
+- Must have even number of digits
+- First half must equal second half
+
+```python
+def is_mirrored(num):
+  s = str(num)
+  length = len(s)
+  if length % 2 != 0:
+    return False
+  mid = length // 2
+  return s[:mid] == s[mid:]
+```
+
+#### Part 2: Repeating Pattern Detection
+A number is "mirrored" if it consists of any repeating pattern:
+- Examples: 11 (1×2), 123123 (123×2), 1234123412 (1234×3), 1111 (1×4)
+- Pattern can be any length that evenly divides the number length
+- Check all possible pattern lengths from 1 to length-1
+
+```python
+def is_mirrored(num):
+  s = str(num)
+  length = len(s)
+  for pattern_len in range(1, length):
+    if length % pattern_len == 0:
+      pattern = s[:pattern_len]
+      if pattern * (length // pattern_len) == s:
+        return True
+  return False
+```
+
+#### Range Processing Pattern
+```python
+# Parse comma-separated ranges
+line = readInput()
+items = line.split(',')
+
+# Process each range
+for item in items:
+  start, end = item.split('-')
+  for num in range(int(start), int(end) + 1):
+    # Process each number
+```
+
+#### Reading Single Line Input
+When input is a single line (not multiple lines):
+```python
+def readInput():
+  with open(inputPath) as file:
+    return file.read().strip()  # Use strip() instead of splitlines()
+```
+
+**Key Insight**: Part 2 generalizes Part 1. Half-mirroring is a specific case of pattern repetition (pattern repeated exactly 2 times).
+
 ## Debugging Techniques
 
 ### Temporary Debug Output
@@ -173,12 +260,29 @@ print(f"{index} {line}")  # Show state after each step
 ❌ Committing code with debug prints
 ✅ Clean up before final commit
 
+### 5. Counting vs. Summing
+❌ Using a counter when the problem asks for a sum
+✅ Carefully read whether to count occurrences or sum values
+
+### 6. Input Format Mismatch
+❌ Using `splitlines()` for single-line input
+✅ Using `strip()` for single-line, `splitlines()` for multi-line
+
+### 7. Pattern Generalization
+❌ Hardcoding for specific case (e.g., only checking 2 repetitions)
+✅ Checking all possible pattern lengths that divide evenly
+
 ## Results Summary
 
 ### Day 01
 - **Part 1**: 1145 (counting lands on 0)
 - **Part 2**: 6561 (counting passes through 0)
 - **Test Results**: 3 and 6 respectively
+
+### Day 02
+- **Part 1**: 22062284697 (sum of half-mirrored numbers)
+- **Part 2**: 46666175279 (sum of repeating pattern numbers)
+- **Test Results**: 1227775554 and 4174379265 respectively
 
 ## Tips for Future Days
 
