@@ -14,12 +14,15 @@ def main():
     value = int(line[1:])
 
     if direction == 'R':
+      # Count how many times we pass through 0 when moving right
+      # We pass 0 when crossing multiples of 100
+      zero_count += (index + value) // 100 - index // 100
       index = (index + value) % 100
     elif direction == 'L':
+      # Count how many times we pass through 0 when moving left
+      # We pass 0 when crossing multiples of 100 going down
+      zero_count += (index - 1) // 100 - (index - value - 1) // 100
       index = (index - value) % 100
-
-    if index == 0:
-      zero_count += 1
 
   print(zero_count)
 
