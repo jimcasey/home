@@ -8,7 +8,9 @@ def main():
   line = readInput()
   items = line.split(',')
   for item in items:
-    print(item)
+    start, end = item.split('-')
+    for num in range(int(start), int(end) + 1):
+      print(num)
 
 
 def readInput():
