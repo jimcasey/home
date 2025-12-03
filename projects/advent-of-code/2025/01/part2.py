@@ -1,7 +1,7 @@
 from os import path
 
 scriptPath = path.dirname(path.abspath(__file__))
-inputPath = scriptPath + '/test.txt'
+inputPath = scriptPath + '/input.txt'
 
 
 def main():
