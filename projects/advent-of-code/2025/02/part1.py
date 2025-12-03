@@ -7,10 +7,22 @@ inputPath = scriptPath + '/test.txt'
 def main():
   line = readInput()
   items = line.split(',')
+  count = 0
   for item in items:
     start, end = item.split('-')
     for num in range(int(start), int(end) + 1):
-      print(num)
+      if is_mirrored(num):
+        count += 1
+  print(count)
+
+
+def is_mirrored(num):
+  s = str(num)
+  length = len(s)
+  if length % 2 != 0:
+    return False
+  mid = length // 2
+  return s[:mid] == s[mid:]
 
 
 def readInput():
