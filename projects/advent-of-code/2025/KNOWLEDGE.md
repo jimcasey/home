@@ -272,6 +272,98 @@ print(f"{index} {line}")  # Show state after each step
 ❌ Hardcoding for specific case (e.g., only checking 2 repetitions)
 ✅ Checking all possible pattern lengths that divide evenly
 
+### 8. Excluding Last Character
+❌ Including all characters when problem specifies exclusion
+✅ Using `line[:-1]` to exclude last character before processing
+
+### 9. Greedy Algorithm Applicability
+❌ Using brute force for all optimization problems
+✅ Recognizing when greedy approach works (monotonic property)
+- If keeping the locally best choice leads to globally best solution
+- Example: largest K-digit subsequence benefits from greedy selection
+
+### Day 03: Greedy Digit Selection
+
+#### Key Constraints
+- **Input Format**: Multi-line, each line is a string of digits
+- **Goal**: Extract specific digits from each line without reordering
+- **Constraint**: Maintain original order (subsequence, not rearrangement)
+
+#### Part 1: Two-Digit Optimization
+Find largest two-digit number by selecting 2 digits in order:
+1. Find largest digit in line (excluding last character)
+2. Find largest digit after that position
+3. Combine into two-digit number
+
+```python
+# Find largest digit excluding last character
+line_without_last = line[:-1]
+max_digit = max(line_without_last)
+
+# Find position of first occurrence
+first_pos = line.index(max_digit)
+
+# Find largest digit after that position
+after_substring = line[first_pos + 1:]
+second_digit = max(after_substring) if after_substring else '0'
+
+# Combine digits
+number = int(max_digit + second_digit)
+```
+
+**Example**: `818181911112111`
+- Excluding last: `81818191111211`
+- Largest digit: `9` (position 6)
+- After position: `11112111`
+- Largest after: `2`
+- Result: `92`
+
+#### Part 2: K-Digit Greedy Selection
+Find largest K-digit number (K=12) using greedy algorithm:
+
+```python
+def find_largest_k_digits(line, k):
+  """Find the largest k-digit number from line without reordering digits."""
+  n = len(line)
+  if n < k:
+    return line  # Can't get k digits from fewer than k characters
+
+  result = []
+  to_remove = n - k  # How many digits we can afford to skip
+
+  for digit in line:
+    # While we can still remove digits and current digit is better than last
+    while result and to_remove > 0 and result[-1] < digit:
+      result.pop()
+      to_remove -= 1
+
+    result.append(digit)
+
+  # Return exactly k digits
+  return ''.join(result[:k])
+```
+
+**Algorithm Explanation**:
+1. Calculate how many digits we can skip: `to_remove = len(line) - k`
+2. Iterate through each digit
+3. If current digit is larger than last digit in result AND we have skips remaining:
+   - Remove the smaller digit
+   - Decrement skip counter
+4. Always add current digit
+5. Return first k digits of result
+
+**Example**: `818181911112111` → `888911112111`
+- Can skip 3 digits (15 - 12 = 3)
+- Keep: 8,8,8 (remove smaller 1s before 8s)
+- Then: 9,1,1,1,1,2,1,1,1
+
+**Key Insight**: This is the "largest subsequence of length K" problem, solved with a monotonic stack approach.
+
+#### Greedy vs. Brute Force
+- ❌ Brute force: Try all combinations O(n choose k)
+- ✅ Greedy: Single pass O(n) with stack operations
+- **Why it works**: At each position, keeping the largest digit available gives optimal result
+
 ## Results Summary
 
 ### Day 01
@@ -283,6 +375,11 @@ print(f"{index} {line}")  # Show state after each step
 - **Part 1**: 22062284697 (sum of half-mirrored numbers)
 - **Part 2**: 46666175279 (sum of repeating pattern numbers)
 - **Test Results**: 1227775554 and 4174379265 respectively
+
+### Day 03
+- **Part 1**: 17316 (sum of largest 2-digit numbers)
+- **Part 2**: 171741365473332 (sum of largest 12-digit numbers)
+- **Test Results**: 357 and 3121910778619 respectively
 
 ## Tips for Future Days
 
