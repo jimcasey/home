@@ -6,7 +6,7 @@ inputPath = scriptPath + '/test.txt'
 
 def main():
   lines = readInput()
-  index = 0
+  index = 50
   zero_count = 0
 
   for line in lines:
