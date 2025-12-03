@@ -1,7 +1,7 @@
 from os import path
 
 scriptPath = path.dirname(path.abspath(__file__))
-inputPath = scriptPath + '/test.txt'
+inputPath = scriptPath + '/input.txt'
 
 
 def main():
@@ -18,11 +18,10 @@ def main():
     elif direction == 'L':
       index = (index - value) % 100
 
-    print(f"{index} {line}")
     if index == 0:
       zero_count += 1
 
-  print(f"\nZero count: {zero_count}")
+  print(zero_count)
 
 
 def readInput():
