@@ -7,40 +7,27 @@ inputPath = scriptPath + '/input.txt'
 def main():
   lines = readInput()
 
-  # Parse ranges and values
+  # Parse ranges only (ignore values section)
   ranges = []
-  values = []
-  parsing_ranges = True
 
   for line in lines:
     if line == '':
-      parsing_ranges = False
-      continue
+      # Stop parsing when we hit the empty line
+      break
 
-    if parsing_ranges:
-      # Parse range like "3-5"
-      parts = line.split('-')
-      min_val = int(parts[0])
-      max_val = int(parts[1])
-      ranges.append((min_val, max_val))
-    else:
-      # Parse value
-      values.append(int(line))
+    # Parse range like "3-5"
+    parts = line.split('-')
+    min_val = int(parts[0])
+    max_val = int(parts[1])
+    ranges.append((min_val, max_val))
 
-  # Count good values
-  good_count = 0
-  for value in values:
-    if is_in_any_range(value, ranges):
-      good_count += 1
-
-  print(f'Good values: {good_count}')
-
-
-def is_in_any_range(value, ranges):
+  # Find all unique numbers covered by any range
+  covered_numbers = set()
   for min_val, max_val in ranges:
-    if min_val <= value <= max_val:
-      return True
-  return False
+    for num in range(min_val, max_val + 1):
+      covered_numbers.add(num)
+
+  print(f'Count of numbers in ranges: {len(covered_numbers)}')
 
 
 def readInput():
