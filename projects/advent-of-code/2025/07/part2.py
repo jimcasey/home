@@ -1,7 +1,49 @@
 from os import path
 
 scriptPath = path.dirname(path.abspath(__file__))
-inputPath = scriptPath + '/input.txt'
+inputPath = scriptPath + '/test.txt'
+
+
+def count_routes(lines, line_idx, pos, line_length):
+  """
+  Recursively count all possible routes from current position.
+
+  Args:
+    lines: The input grid
+    line_idx: Current line index
+    pos: Current beam position
+    line_length: Width of the grid
+
+  Returns:
+    Number of possible routes from this state
+  """
+  # Base case: reached the end of the grid
+  if line_idx >= len(lines):
+    return 1
+
+  # Out of bounds - this path is invalid
+  if pos < 0 or pos >= line_length:
+    return 0
+
+  line = lines[line_idx]
+
+  # Check if there's a splitter at this position
+  if line[pos] == '^':
+    # Beam can go either left or right
+    routes = 0
+
+    # Try going left (pos - 1)
+    if pos > 0:
+      routes += count_routes(lines, line_idx + 1, pos - 1, line_length)
+
+    # Try going right (pos + 1)
+    if pos < line_length - 1:
+      routes += count_routes(lines, line_idx + 1, pos + 1, line_length)
+
+    return routes
+  else:
+    # Beam continues at same position
+    return count_routes(lines, line_idx + 1, pos, line_length)
 
 
 def main():
@@ -9,41 +51,13 @@ def main():
 
   # Find the starting position 'S' in the first line
   first_line = lines[0]
-  beam_positions = {first_line.index('S')}
-
-  split_count = 0
+  start_pos = first_line.index('S')
   line_length = len(first_line)
 
-  # Process each subsequent line
-  for line in lines[1:]:
-    # Early termination if no beams remain
-    if not beam_positions:
-      break
+  # Count all possible routes starting from line 1 (after the S)
+  route_count = count_routes(lines, 1, start_pos, line_length)
 
-    new_beam_positions = set()
-
-    for pos in beam_positions:
-      # Only process beams within valid bounds
-      if pos < 0 or pos >= line_length:
-        continue
-
-      # Check if there's a splitter at this position
-      if line[pos] == '^':
-        # Beam splits
-        split_count += 1
-        # Create beams at previous and next positions (bounds checked when added)
-        if pos > 0:
-          new_beam_positions.add(pos - 1)
-        if pos < line_length - 1:
-          new_beam_positions.add(pos + 1)
-      else:
-        # Beam continues at same position
-        new_beam_positions.add(pos)
-
-    # Merge beams (set automatically handles duplicates)
-    beam_positions = new_beam_positions
-
-  print(f'Number of splits: {split_count}')
+  print(f'Number of possible routes: {route_count}')
 
 
 def readInput():
