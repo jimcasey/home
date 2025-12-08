@@ -5,7 +5,36 @@ inputPath = scriptPath + '/test.txt'
 
 
 def main():
-  pass
+  lines = readInput()
+
+  # Find the starting position 'S' in the first line
+  first_line = lines[0]
+  beam_positions = {first_line.index('S')}
+
+  split_count = 0
+
+  # Process each subsequent line
+  for line in lines[1:]:
+    new_beam_positions = set()
+
+    for pos in beam_positions:
+      # Check if there's a splitter at this position
+      if pos < len(line) and line[pos] == '^':
+        # Beam splits
+        split_count += 1
+        # Create beams at previous and next positions
+        if pos > 0:
+          new_beam_positions.add(pos - 1)
+        if pos < len(line) - 1:
+          new_beam_positions.add(pos + 1)
+      else:
+        # Beam continues at same position
+        new_beam_positions.add(pos)
+
+    # Merge beams (set automatically handles duplicates)
+    beam_positions = new_beam_positions
+
+  print(f'Number of splits: {split_count}')
 
 
 def readInput():
