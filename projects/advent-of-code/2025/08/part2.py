@@ -9,22 +9,15 @@ def main():
   lines = readInput()
   points = parsePoints(lines)
 
-  # Determine approach based on input size
-  n = len(points)
-  if n == 20:
-    # Test data: target 11 circuits
-    circuit_sizes = buildAndPartitionMST(points, 11, 'target_circuits')
-  else:
-    # Input data: process exactly 1000 shortest edges
-    circuit_sizes = buildAndPartitionMST(points, 1000, 'max_edges')
+  # Build complete MST (single circuit connecting all points)
+  last_edge_points = buildCompleteMST(points)
 
-  circuit_sizes.sort(reverse=True)
-
-  print(f"\nCircuit sizes: {circuit_sizes}")
-
-  if len(circuit_sizes) >= 3:
-    result = circuit_sizes[0] * circuit_sizes[1] * circuit_sizes[2]
-    print(f"\nResult: {circuit_sizes[0]} × {circuit_sizes[1]} × {circuit_sizes[2]} = {result}")
+  if last_edge_points:
+    p1, p2 = last_edge_points
+    result = p1[0] * p2[0]  # Multiply x-coordinates
+    print(f"\nLast edge connects: {p1} and {p2}")
+    print(f"X-coordinates: {p1[0]} × {p2[0]} = {result}")
+    print(f"\nResult: {result}")
 
 
 def parsePoints(lines):
@@ -43,6 +36,70 @@ def distance(p1, p2):
     (p1[1] - p2[1]) ** 2 +
     (p1[2] - p2[2]) ** 2
   )
+
+
+def buildCompleteMST(points):
+  """
+  Build complete MST connecting all points into a single circuit.
+  Returns the two points of the last edge that was added.
+  """
+  n = len(points)
+  num_circuits = n
+
+  # Union-Find data structure with path compression
+  parent = {i: i for i in range(n)}
+  size = {i: 1 for i in range(n)}
+
+  def find(x):
+    if parent[x] != x:
+      parent[x] = find(parent[x])  # Path compression
+    return parent[x]
+
+  def union(i, j):
+    nonlocal num_circuits
+    root_i = find(i)
+    root_j = find(j)
+    if root_i != root_j:
+      # Union by size
+      if size[root_i] < size[root_j]:
+        parent[root_i] = root_j
+        size[root_j] += size[root_i]
+      else:
+        parent[root_j] = root_i
+        size[root_i] += size[root_j]
+      num_circuits -= 1
+      return True
+    return False
+
+  # Calculate all pairwise distances
+  print(f"Calculating {n * (n-1) // 2} pairwise distances...")
+  edges = []
+  for i in range(n):
+    for j in range(i + 1, n):
+      dist = distance(points[i], points[j])
+      edges.append((dist, i, j))
+
+  print(f"Sorting {len(edges)} edges...")
+  edges.sort()
+
+  # Process edges until we have a single circuit
+  print(f"Building complete MST...")
+  edges_processed = 0
+  last_edge = None
+
+  for dist, i, j in edges:
+    if num_circuits <= 1:
+      break
+    if union(i, j):
+      edges_processed += 1
+      last_edge = (i, j)
+
+  print(f"Processed {edges_processed} edges, formed single circuit")
+
+  if last_edge:
+    i, j = last_edge
+    return (points[i], points[j])
+  return None
 
 
 def buildAndPartitionMST(points, param, mode='target_circuits'):
