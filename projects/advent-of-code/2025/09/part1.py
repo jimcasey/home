@@ -23,8 +23,9 @@ def main():
       x2, y2 = points[j]
 
       # Calculate area of rectangle with these two points as corners
-      width = abs(x2 - x1)
-      height = abs(y2 - y1)
+      # Include the points themselves in the count
+      width = abs(x2 - x1) + 1
+      height = abs(y2 - y1) + 1
       area = width * height
 
       if area > max_area:
