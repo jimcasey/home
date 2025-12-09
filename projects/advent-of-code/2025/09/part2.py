@@ -51,17 +51,41 @@ def is_rectangle_inside_polygon(corner1, corner2, polygon):
   x1, y1 = corner1
   x2, y2 = corner2
 
-  # Generate all 4 corners of the rectangle
+  min_x, max_x = min(x1, x2), max(x1, x2)
+  min_y, max_y = min(y1, y2), max(y1, y2)
+
+  # Generate all 4 corners
   corners = [
-    (min(x1, x2), min(y1, y2)),
-    (max(x1, x2), min(y1, y2)),
-    (min(x1, x2), max(y1, y2)),
-    (max(x1, x2), max(y1, y2))
+    (min_x, min_y),
+    (max_x, min_y),
+    (min_x, max_y),
+    (max_x, max_y)
   ]
 
-  # Check if all 4 corners are inside or on the polygon
+  # All 4 corners must be inside or on the polygon
   for corner in corners:
     if not point_in_polygon(corner, polygon):
+      return False
+
+  # Check center point
+  center_x = (min_x + max_x) // 2
+  center_y = (min_y + max_y) // 2
+  if not point_in_polygon((center_x, center_y), polygon):
+    return False
+
+  # Check midpoints of all 4 edges
+  mid_x = (min_x + max_x) // 2
+  mid_y = (min_y + max_y) // 2
+
+  edge_points = [
+    (mid_x, min_y),  # bottom edge midpoint
+    (mid_x, max_y),  # top edge midpoint
+    (min_x, mid_y),  # left edge midpoint
+    (max_x, mid_y),  # right edge midpoint
+  ]
+
+  for point in edge_points:
+    if not point_in_polygon(point, polygon):
       return False
 
   return True
