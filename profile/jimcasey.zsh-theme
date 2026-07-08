@@ -32,5 +32,5 @@ $ '
 
 # runtime reporting
 REPORTTIME=10
-TIMEFMT="${fg[cyan]}Elapsed time: %E${reset_color}"
+TIMEFMT="${fg[cyan]}Elapsed time: %E${reset_color}  CPU: %P (%Uu %Ss)"
 
