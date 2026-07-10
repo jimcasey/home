@@ -1,0 +1,169 @@
+{
+    "editor.autoClosingBrackets": "never",
+    "editor.dragAndDrop": false,
+    "editor.folding": false,
+    "editor.insertSpaces": true,
+    "editor.minimap.enabled": false,
+    "editor.renderLineHighlight": "none",
+    "editor.roundedSelection": false,
+    "editor.scrollBeyondLastLine": false,
+    "editor.smoothScrolling": true,
+    "editor.tabSize": 2,
+    "editor.trimAutoWhitespace": true,
+    "editor.wordWrap": "off",
+    "emmet.showExpandedAbbreviation": "never",
+    "explorer.confirmDelete": false,
+    "explorer.confirmDragAndDrop": false,
+    "extensions.ignoreRecommendations": true,
+    "files.insertFinalNewline": true,
+    "files.trimTrailingWhitespace": true,
+    "merge-conflict.codeLens.enabled": false,
+    "window.newWindowDimensions": "inherit",
+    "window.openFilesInNewWindow": "off",
+    "window.restoreWindows": "all",
+    "window.title": "${activeEditorMedium}",
+    "workbench.startupEditor": "newUntitledFile",
+    "search.exclude": {
+        "**/build-dev/*": true,
+        "**/build-prod/*": true,
+        "**/dist/*": true,
+        "**/*.svg": true
+    },
+    "editor.autoClosingQuotes": "never",
+    "editor.autoSurround": "never",
+    "prettier.requireConfig": true,
+    "[typescript]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "[typescriptreact]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "[jsonc]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "[javascript]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "html.autoClosingTags": false,
+    "javascript.autoClosingTags": false,
+    "window.restoreFullscreen": true,
+    "editor.suggestSelection": "first",
+    "[json]": {
+        "editor.defaultFormatter": "vscode.json-language-features"
+    },
+    "[html]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "diffEditor.ignoreTrimWhitespace": false,
+    "editor.renderControlCharacters": false,
+    "security.workspace.trust.untrustedFiles": "open",
+    "[markdown]": {
+        "editor.defaultFormatter": "charliermarsh.ruff",
+        "diffEditor.ignoreTrimWhitespace": true
+    },
+    "python.pythonPath": "${env:PYTHON_PATH}",
+    "python.formatting.autopep8Args": [
+        "--indent-size=2",
+        "--ignore=E302,E305"
+    ],
+    "window.autoDetectColorScheme": true,
+    "workbench.colorCustomizations": {
+        "[Default Light+]": {
+            "sideBar.foreground": "#202020",
+            "gitDecoration.ignoredResourceForeground": "#202020a1"
+        },
+        "terminal.background": "#000000",
+        "terminal.foreground": "#e0e0e0"
+    },
+    "files.exclude": {
+        "**/.classpath": true,
+        "**/.project": true,
+        "**/.settings": true,
+        "**/.factorypath": true
+    },
+    "terminal.integrated.cursorStyle": "line",
+    "terminal.integrated.cursorBlinking": true,
+    "workbench.fontAliasing": "auto",
+    "terminal.integrated.scrollback": 10000,
+    "terminal.integrated.defaultProfile.osx": "zsh",
+    "snyk.yesWelcomeNotification": false,
+    "go.lintOnSave": "file",
+    "go.toolsManagement.autoUpdate": true,
+    "editor.inlineSuggest.enabled": true,
+    "[python]": {
+        "editor.formatOnType": true,
+        "editor.defaultFormatter": "charliermarsh.ruff"
+    },
+    "npm.scriptHover": false,
+    "debug.javascript.codelens.npmScripts": "never",
+    "[css]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "settingsSync.ignoredExtensions": [
+        "ms-toolsai.jupyter"
+    ],
+    "notebook.showCellStatusBar": "hidden",
+    "editor.indentSize": "tabSize",
+    "notebook.output.scrolling": true,
+    "editor.detectIndentation": false,
+    "typescript.autoClosingTags": false,
+    "files.associations": {
+        "*.mdx": "markdown",
+        "*.py": "python"
+    },
+    "typescript.updateImportsOnFileMove.enabled": "always",
+    "javascript.updateImportsOnFileMove.enabled": "always",
+    "workbench.preferredLightColorTheme": "Default Light+",
+    "cSpell.dictionaries": [
+        "typescript",
+        "node",
+        "html",
+        "css",
+        "bash"
+    ],
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "[shellscript]": {
+        "editor.defaultFormatter": "foxundermoon.shell-format"
+    },
+    "autopep8.args": [
+        "--indent-size=2",
+        "--max-line-length=120"
+    ],
+    "window.commandCenter": false,
+    "scm.repositories.visible": 0,
+    "scm.repositories.sortOrder": "name",
+    "workbench.colorTheme": "Default Light+",
+    "github.copilot.enable": {
+        "*": true,
+        "plaintext": false,
+        "markdown": false,
+        "scminput": false
+    },
+    "editor.accessibilitySupport": "off",
+    "zenMode.centerLayout": false,
+    "zenMode.hideStatusBar": false,
+    "typescript.workspaceSymbols.scope": "currentProject",
+    "window.confirmSaveUntitledWorkspace": false,
+    "prettier.prettierPath": "./node_modules/prettier",
+    "prettier.printWidth": 100,
+    "chat.editing.confirmEditRequestRemoval": false,
+    "scm.showActionButton": false,
+    "scm.showInputActionButton": false,
+    "git.blame.statusBarItem.enabled": false,
+    "chat.agent.enabled": true,
+    "github.copilot.chat.languageContext.typescript.enabled": true,
+    "github.copilot.chat.languageContext.inline.typescript.enabled": true,
+    "github.copilot.chat.languageContext.fix.typescript.enabled": true,
+    "github.copilot.chat.agent.thinkingTool": true,
+    "github.copilot.chat.scopeSelection": true,
+    "github.copilot.chat.codesearch.enabled": true,
+    "cursor.cpp.disabledLanguages": [
+        "plaintext",
+        "scminput",
+        "markdown"
+    ],
+    "jupyter.askForKernelRestart": false,
+    "cursorBlame.editorDecoration.enabled": false,
+    "cursor.cpp.enablePartialAccepts": true
+}
+
